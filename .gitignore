@@ -35,3 +35,6 @@ build/
 
 /wipe.bat
 /compile-rb.bat
+
+# Ignore local-runner result file
+**/local-runner/result.txt
