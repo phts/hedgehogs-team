@@ -74,4 +74,9 @@ module Utils
     bottom_near_section_xx.include?(me.x) && bottom_near_section_yy.include?(me.y)
   end
 
+  def debug(message = nil)
+    puts "#{message}"
+    puts "   x:#{me.x}; y:#{me.y}; a:#{me.angle}"
+  end
+
 end
