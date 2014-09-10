@@ -1,8 +1,8 @@
 module Utils
 
-  def left_opponent?
-    return @left_opponent unless @left_opponent.nil?
-    @left_opponent = world.get_opponent_player.net_left < world.width/2
+  def opponent_on_the_left?
+    return @opponent_on_the_left unless @opponent_on_the_left.nil?
+    @opponent_on_the_left = world.get_opponent_player.net_left < world.width/2
   end
 
   def opponent_net_center_x

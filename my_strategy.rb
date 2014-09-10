@@ -48,7 +48,7 @@ class MyStrategy
 
   def supporting
     netx = opponent_net_center_x
-    netx += left_opponent? ? 200 : -200
+    netx += opponent_on_the_left? ? 200 : -200
     nety = opponent_net_center_y
     nety += (world.puck.y < nety ? 0.5 : -0.5) * game.goal_net_height;
     movee.speed_up = 1.0
