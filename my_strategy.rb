@@ -67,12 +67,33 @@ class MyStrategy
 
   def going_to_strike_position
     unless strike_position
-      if me_in_top_far_section? || me_in_top_near_section?
-        # if taken on the bottom section then go to bottom center
+      if me_in_top_far_section? && me_look_at_bottom_far_corner?
+        # TODO move to bottom far section center first
         self.strike_position = :top_center
-      elsif me_in_bottom_far_section? || me_in_bottom_near_section?
-        # if taken on the top section then go to top center
+      elsif me_in_bottom_far_section? && me_look_at_bottom_near_corner?
+        # TODO move to bottom near section center first
+        self.strike_position = :top_center
+      elsif me_in_bottom_near_section? && me_look_up?
+        # TODO move to top near section center first
+        self.strike_position = :top_center
+      elsif me_in_bottom_near_section? && me_look_back? ||
+         me_in_top_near_section? && me_look_up?
+        self.strike_position = :top_center
+      elsif me_in_bottom_far_section? && me_look_at_top_far_corner?
+        # TODO move to top far section center first
         self.strike_position = :bottom_center
+      elsif me_in_top_far_section? && me_look_at_top_near_corner?
+        # TODO move to top near section center first
+        self.strike_position = :bottom_center
+      elsif me_in_top_near_section? && me_look_down?
+        # TODO move to bottom near section center first
+        self.strike_position = :bottom_center
+      elsif me_in_top_near_section? && me_look_back? ||
+         me_in_bottom_near_section? && me_look_down?
+        self.strike_position = :bottom_center
+      else
+        # Ususally on start when angle == 3.14
+        self.strike_position = :top_center
       end
     end
     do_state :"going_to_#{strike_position}"
