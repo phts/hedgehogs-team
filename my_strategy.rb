@@ -54,7 +54,7 @@ class MyStrategy
     netx = opponent_net_center_x
     netx += opponent_on_the_left? ? 200 : -200
     nety = opponent_net_center_y
-    nety += (world.puck.y < nety ? 0.5 : -0.5) * game.goal_net_height;
+    nety += (world.puck.y < nety ? 1 : -1) * game.goal_net_height;
     movee.speed_up = 1.0
 
     ang_to_net = me.get_angle_to(netx, nety)
