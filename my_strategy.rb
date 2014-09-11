@@ -11,6 +11,8 @@ class MyStrategy
 
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
 
+  TEAMMATE_INDEX_TO_TAKING_ACTION = {0 => :taking, 1 => :defending}
+
   def move(me, world, game, move)
     @me = me
     @world = world
@@ -29,9 +31,12 @@ class MyStrategy
         self.strike_position = nil
         do_state :supporting
       end
-    else
+    elsif world.puck.owner_player_id == -1
       self.strike_position = nil
       do_state :taking
+    else
+      self.strike_position = nil
+      do_state(TEAMMATE_INDEX_TO_TAKING_ACTION[me.teammate_index] || :taking)
     end
   end
 
@@ -133,6 +138,23 @@ class MyStrategy
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to_unit(world.puck)
     movee.action = ActionType::TAKE_PUCK
+  end
+
+  def defending
+    defending_x = my_net_center_x
+    defending_x += opponent_on_the_left? ? -100 : 100
+    defending_y = my_net_center_y
+    defending_y += (world.puck.y < defending_y ? 0.4 : -0.4) * game.goal_net_height;
+    movee.speed_up = 1.0
+    movee.turn = me.get_angle_to(defending_x, defending_y)
+    movee.action = ActionType::TAKE_PUCK
+    if me.get_distance_to(defending_x, defending_y) < 100
+      movee.speed_up = 0.5
+    end
+    if me.get_distance_to(defending_x, defending_y) < 30
+      movee.speed_up = 0.0
+      movee.turn = me.get_angle_to_unit(world.puck)
+    end
   end
 
 end

@@ -26,6 +26,18 @@ module Utils
     @opponent_net_center_y = 0.5 * (opponent.net_top + opponent.net_bottom)
   end
 
+  def my_net_center_x
+    return @my_net_center_x if @my_net_center_x
+    my_player = world.get_my_player
+    @my_net_center_x = 0.5 * (my_player.net_left + my_player.net_right)
+  end
+
+  def my_net_center_y
+    return @my_net_center_y if @my_net_center_y
+    my_player = world.get_my_player
+    @my_net_center_y = 0.5 * (my_player.net_top + my_player.net_bottom)
+  end
+
   def rink_width
     @rink_width ||= game.rink_right-game.rink_left
   end
