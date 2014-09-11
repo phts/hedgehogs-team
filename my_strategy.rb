@@ -163,12 +163,15 @@ class MyStrategy
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to(defending_x, defending_y)
     movee.action = ActionType::TAKE_PUCK
-    if me.get_distance_to(defending_x, defending_y) < 100
-      movee.speed_up = 0.5
-    end
-    if me.get_distance_to(defending_x, defending_y) < 30
-      movee.speed_up = 0.0
+    if me.get_distance_to(defending_x, defending_y) < 150
+      movee.speed_up = -0.2
       movee.turn = me.get_angle_to_unit(world.puck)
+    end
+    if me.get_distance_to(defending_x, defending_y) < 20
+      movee.speed_up = 0
+    end
+    if (my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y)
+      movee.speed_up = 0.4
     end
   end
 
