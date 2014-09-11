@@ -28,14 +28,14 @@ class MyStrategy
       if world.puck.owner_hockeyist_id == me.id
         do_state :holding
       else
-        self.strike_position = nil
+        reset_holding_state
         do_state :supporting
       end
     elsif world.puck.owner_player_id == -1
-      self.strike_position = nil
+      reset_holding_state
       do_state :taking
     else
-      self.strike_position = nil
+      reset_holding_state
       do_state(TEAMMATE_INDEX_TO_TAKING_ACTION[me.teammate_index] || :taking)
     end
   end
@@ -49,10 +49,16 @@ class MyStrategy
 
   attr_accessor :state
   attr_accessor :strike_position
+  attr_accessor :in_strike_position
 
   def do_state(value)
     self.state = value
     send(value)
+  end
+
+  def reset_holding_state
+    self.strike_position = nil
+    self.in_strike_position = nil
   end
 
   def supporting
@@ -105,9 +111,13 @@ class MyStrategy
   end
 
   def going_to_top_center
+    movee.speed_up = 1.0
+    if in_strike_position
+      do_state :turning_to_net
+      return
+    end
     centerx = rink_width/2
     centery = game.rink_top + 100
-    movee.speed_up = 1.0
     movee.turn = me.get_angle_to(centerx, centery)
     if me.get_distance_to(centerx, centery) < 100
       do_state :turning_to_net
@@ -115,9 +125,13 @@ class MyStrategy
   end
 
   def going_to_bottom_center
+    movee.speed_up = 1.0
+    if in_strike_position
+      do_state :turning_to_net
+      return
+    end
     centerx = rink_width/2
     centery = game.rink_bottom - 100
-    movee.speed_up = 1.0
     movee.turn = me.get_angle_to(centerx, centery)
     if me.get_distance_to(centerx, centery) < 100
       do_state :turning_to_net
@@ -125,6 +139,7 @@ class MyStrategy
   end
 
   def turning_to_net
+    self.in_strike_position = true
     nety = opponent_net_center_y
     nety += (me.y < nety ? 0.5 : -0.5) * game.goal_net_height;
     ang_to_net = me.get_angle_to(opponent_net_center_x, nety)
