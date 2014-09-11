@@ -29,7 +29,13 @@ class MyStrategy
         do_state :holding
       else
         reset_holding_state
-        do_state :supporting
+        if near_section_xx.include?(world.puck.x)
+          # if puck is on the near half
+          do_state :defending
+        else
+          # if puck is on the far half
+          do_state :supporting
+        end
       end
     elsif world.puck.owner_player_id == -1
       reset_holding_state
