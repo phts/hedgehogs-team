@@ -188,6 +188,7 @@ class MyStrategy
     end
     if me.get_distance_to(defending_x, defending_y) < 20
       movee.speed_up = 0
+      movee.turn = me.get_angle_to_unit(world.puck)
       movee.action = ActionType::STRIKE
     end
   end
