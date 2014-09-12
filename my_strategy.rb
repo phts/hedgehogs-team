@@ -176,7 +176,9 @@ class MyStrategy
     if me.get_distance_to(defending_x, defending_y) < 20
       movee.speed_up = 0
     end
-    if (my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y)
+    if me.get_distance_to(defending_x, defending_y) < 60 &&
+       ((my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y))
+      # if me went outside the net
       movee.speed_up = 0.4
     end
   end
