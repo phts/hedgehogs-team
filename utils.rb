@@ -11,6 +11,9 @@ module Utils
   BOTTOM_LEFT_CORNER_ANGLES = [(-Math::PI)..(-3*Math::PI/4), (Math::PI/4)..Math::PI]
   BOTTOM_RIGHT_CORNER_ANGLES = [(-Math::PI/4)..(3*Math::PI/4)]
 
+  REACH_DISTANCE = 120 # rules (p.13)
+  REACH_ANGLES = ((-Math::PI/12)..(Math::PI/12)) # rules (p.13)
+
   def opponent_on_the_left?
     return @opponent_on_the_left unless @opponent_on_the_left.nil?
     @opponent_on_the_left = world.get_opponent_player.net_left < rink_width/2
@@ -159,6 +162,10 @@ module Utils
 
   def nearest_opponent_hockeyist_to_unit(unit)
     nearest_hockeyist_to_unit(opponent_player.id, unit)
+  end
+
+  def reachable_unit?(unit)
+    me.get_distance_to_unit(unit) <= REACH_DISTANCE && REACH_ANGLES.include?(me.get_angle_to_unit(unit))
   end
 
   def debug(message = nil)

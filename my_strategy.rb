@@ -12,7 +12,6 @@ class MyStrategy
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
 
   TEAMMATE_INDEX_TO_TAKING_ACTION = {0 => :taking, 1 => :defending}
-  REACH_DISTANCE = 120 # rules (p.13)
 
   def move(me, world, game, move)
     @me = me
@@ -79,7 +78,7 @@ class MyStrategy
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to_unit(opp)
     movee.action = ActionType::NONE
-    if me.get_distance_to_unit(opp) < REACH_DISTANCE
+    if reachable_unit?(opp)
       movee.action = ActionType::SWING
     end
   end
@@ -186,7 +185,7 @@ class MyStrategy
       else
         movee.speed_up = -0.2
         movee.turn = me.get_angle_to_unit(world.puck)
-        if me.get_distance_to_unit(world.puck) < REACH_DISTANCE
+        if reachable_unit?(world.puck)
           movee.action = ActionType::STRIKE
         end
       end
@@ -194,7 +193,7 @@ class MyStrategy
     if distance < 20
       movee.speed_up = 0
       movee.turn = me.get_angle_to_unit(world.puck)
-      if me.get_distance_to_unit(world.puck) < REACH_DISTANCE
+      if reachable_unit?(world.puck)
         movee.action = ActionType::STRIKE
       end
     end
