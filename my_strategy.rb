@@ -164,6 +164,7 @@ class MyStrategy
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to_unit(world.puck)
     movee.action = ActionType::TAKE_PUCK
+    try_to_knock_down_opponent
   end
 
   def defending
@@ -196,6 +197,13 @@ class MyStrategy
       if reachable_unit?(world.puck)
         movee.action = ActionType::STRIKE
       end
+    end
+    try_to_knock_down_opponent
+  end
+
+  def try_to_knock_down_opponent
+    if reachable_unit?(nearest_opponent_hockeyist_to_unit(me))
+      movee.action = ActionType::SWING
     end
   end
 
