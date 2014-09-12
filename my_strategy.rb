@@ -171,14 +171,16 @@ class MyStrategy
     defending_x += opponent_on_the_left? ? -120 : 120
     defending_y = my_net_center_y
     defending_y += (world.puck.y < defending_y ? 0.38 : -0.38) * game.goal_net_height;
+    angle_to_defending = me.get_angle_to(defending_x, defending_y)
     movee.speed_up = 1.0
-    movee.turn = me.get_angle_to(defending_x, defending_y)
+    movee.turn = angle_to_defending
     movee.action = ActionType::TAKE_PUCK
-    if me.get_distance_to(defending_x, defending_y) < 150
+    distance = me.get_distance_to(defending_x, defending_y)
+    if distance < 150
       if ((my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y))
         # if me went outside the net
         movee.speed_up = 0.4
-        movee.turn = me.get_angle_to(defending_x, defending_y)
+        movee.turn = angle_to_defending
         movee.action = ActionType::TAKE_PUCK
       else
         movee.speed_up = -0.2
@@ -186,7 +188,7 @@ class MyStrategy
         movee.action = ActionType::STRIKE
       end
     end
-    if me.get_distance_to(defending_x, defending_y) < 20
+    if distance < 20
       movee.speed_up = 0
       movee.turn = me.get_angle_to_unit(world.puck)
       movee.action = ActionType::STRIKE
