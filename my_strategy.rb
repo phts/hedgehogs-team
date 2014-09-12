@@ -179,13 +179,16 @@ class MyStrategy
         # if me went outside the net
         movee.speed_up = 0.4
         movee.turn = me.get_angle_to(defending_x, defending_y)
+        movee.action = ActionType::TAKE_PUCK
       else
         movee.speed_up = -0.2
         movee.turn = me.get_angle_to_unit(world.puck)
+        movee.action = ActionType::STRIKE
       end
     end
     if me.get_distance_to(defending_x, defending_y) < 20
       movee.speed_up = 0
+      movee.action = ActionType::STRIKE
     end
   end
 
