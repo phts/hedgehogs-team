@@ -27,15 +27,11 @@ module Utils
   end
 
   def my_net_center_x
-    return @my_net_center_x if @my_net_center_x
-    my_player = world.get_my_player
-    @my_net_center_x = 0.5 * (my_player.net_left + my_player.net_right)
+    @my_net_center_x ||= 0.5 * (my_player.net_left + my_player.net_right)
   end
 
   def my_net_center_y
-    return @my_net_center_y if @my_net_center_y
-    my_player = world.get_my_player
-    @my_net_center_y = 0.5 * (my_player.net_top + my_player.net_bottom)
+    @my_net_center_y ||= 0.5 * (my_player.net_top + my_player.net_bottom)
   end
 
   def rink_width
@@ -145,6 +141,10 @@ module Utils
 
   def me_look_at_bottom_near_corner?
     include_angle?(bottom_near_corner_angles, me.angle)
+  end
+
+  def my_player
+    @my_player ||= world.get_my_player
   end
 
   def debug(message = nil)
