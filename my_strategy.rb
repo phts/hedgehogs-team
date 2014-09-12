@@ -24,6 +24,12 @@ class MyStrategy
       return
     end
 
+    if world.tick < 200 && me.teammate_index == 1 && world.puck.owner_hockeyist_id != me.id
+      # the second teammate (closer to the net) is defending the net on game start
+      do_state :defending
+      return
+    end
+
     if world.puck.owner_player_id == me.player_id
       if world.puck.owner_hockeyist_id == me.id
         do_state :holding
