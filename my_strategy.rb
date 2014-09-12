@@ -163,23 +163,24 @@ class MyStrategy
 
   def defending
     defending_x = my_net_center_x
-    defending_x += opponent_on_the_left? ? -100 : 100
+    defending_x += opponent_on_the_left? ? -120 : 120
     defending_y = my_net_center_y
-    defending_y += (world.puck.y < defending_y ? 0.4 : -0.4) * game.goal_net_height;
+    defending_y += (world.puck.y < defending_y ? 0.38 : -0.38) * game.goal_net_height;
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to(defending_x, defending_y)
     movee.action = ActionType::TAKE_PUCK
     if me.get_distance_to(defending_x, defending_y) < 150
-      movee.speed_up = -0.2
-      movee.turn = me.get_angle_to_unit(world.puck)
+      if ((my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y))
+        # if me went outside the net
+        movee.speed_up = 0.4
+        movee.turn = me.get_angle_to(defending_x, defending_y)
+      else
+        movee.speed_up = -0.2
+        movee.turn = me.get_angle_to_unit(world.puck)
+      end
     end
     if me.get_distance_to(defending_x, defending_y) < 20
       movee.speed_up = 0
-    end
-    if me.get_distance_to(defending_x, defending_y) < 60 &&
-       ((my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y))
-      # if me went outside the net
-      movee.speed_up = 0.4
     end
   end
 
