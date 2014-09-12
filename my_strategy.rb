@@ -74,14 +74,13 @@ class MyStrategy
   end
 
   def supporting
-    netx = opponent_net_center_x
-    netx += opponent_on_the_left? ? 250 : -250
-    nety = opponent_net_center_y
-    nety += (world.puck.y < nety ? 0.8 : -0.8) * game.goal_net_height;
+    opp = nearest_opponent_hockeyist_to_unit(world.puck)
     movee.speed_up = 1.0
-
-    ang_to_net = me.get_angle_to(netx, nety)
-    movee.turn = ang_to_net
+    movee.turn = me.get_angle_to_unit(opp)
+    movee.action = ActionType::STRIKE
+    if me.get_distance_to_unit(opp) < 70
+      movee.action = ActionType::SWING
+    end
   end
 
   def holding

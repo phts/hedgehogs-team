@@ -1,3 +1,5 @@
+require "./model/hockeyist_type"
+
 module Utils
 
   TOP_ANGLES = (-Math::PI..0)
@@ -145,6 +147,18 @@ module Utils
 
   def my_player
     @my_player ||= world.get_my_player
+  end
+
+  def opponent_player
+    @opponent_player ||= world.get_opponent_player
+  end
+
+  def nearest_hockeyist_to_unit(player_id, unit)
+    world.hockeyists.select{ |h| h.player_id == player_id && h.type != HockeyistType::GOALIE }.min_by{ |h| h.get_distance_to_unit(unit) }
+  end
+
+  def nearest_opponent_hockeyist_to_unit(unit)
+    nearest_hockeyist_to_unit(opponent_player.id, unit)
   end
 
   def debug(message = nil)
