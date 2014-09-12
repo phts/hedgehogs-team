@@ -12,6 +12,7 @@ class MyStrategy
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
 
   TEAMMATE_INDEX_TO_TAKING_ACTION = {0 => :taking, 1 => :defending}
+  REACH_DISTANCE = 120 # rules (p.13)
 
   def move(me, world, game, move)
     @me = me
@@ -77,8 +78,8 @@ class MyStrategy
     opp = nearest_opponent_hockeyist_to_unit(world.puck)
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to_unit(opp)
-    movee.action = ActionType::STRIKE
-    if me.get_distance_to_unit(opp) < 70
+    movee.action = ActionType::NONE
+    if me.get_distance_to_unit(opp) < REACH_DISTANCE
       movee.action = ActionType::SWING
     end
   end
@@ -174,24 +175,27 @@ class MyStrategy
     angle_to_defending = me.get_angle_to(defending_x, defending_y)
     movee.speed_up = 1.0
     movee.turn = angle_to_defending
-    movee.action = ActionType::TAKE_PUCK
+    action = ActionType::TAKE_PUCK
     distance = me.get_distance_to(defending_x, defending_y)
     if distance < 150
       if ((my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y))
         # if me went outside the net
         movee.speed_up = 0.4
         movee.turn = angle_to_defending
-        movee.action = ActionType::TAKE_PUCK
+        action = ActionType::TAKE_PUCK
       else
         movee.speed_up = -0.2
         movee.turn = me.get_angle_to_unit(world.puck)
-        movee.action = ActionType::STRIKE
+        action = ActionType::STRIKE
       end
     end
     if distance < 20
       movee.speed_up = 0
       movee.turn = me.get_angle_to_unit(world.puck)
-      movee.action = ActionType::STRIKE
+      action = ActionType::STRIKE
+    end
+    if distance < REACH_DISTANCE
+      movee.action = action
     end
   end
 
