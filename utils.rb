@@ -16,19 +16,15 @@ module Utils
 
   def opponent_on_the_left?
     return @opponent_on_the_left unless @opponent_on_the_left.nil?
-    @opponent_on_the_left = world.get_opponent_player.net_left < rink_width/2
+    @opponent_on_the_left = opponent_player.net_left < rink_width/2
   end
 
   def opponent_net_center_x
-    return @opponent_net_center_x if @opponent_net_center_x
-    opponent = world.get_opponent_player
-    @opponent_net_center_x = 0.5 * (opponent.net_left + opponent.net_right)
+    @opponent_net_center_x ||= 0.5 * (opponent_player.net_left + opponent_player.net_right)
   end
 
   def opponent_net_center_y
-    return @opponent_net_center_y if @opponent_net_center_y
-    opponent = world.get_opponent_player
-    @opponent_net_center_y = 0.5 * (opponent.net_top + opponent.net_bottom)
+    @opponent_net_center_y ||= 0.5 * (opponent_player.net_top + opponent_player.net_bottom)
   end
 
   def my_net_center_x
