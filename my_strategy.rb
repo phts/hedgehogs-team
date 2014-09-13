@@ -24,12 +24,6 @@ class MyStrategy
       return
     end
 
-    if world.tick < 200 && me.teammate_index == 1 && world.puck.owner_hockeyist_id != me.id
-      # the second teammate (closer to the net) is defending the net on game start
-      do_state :defending
-      return
-    end
-
     if world.puck.owner_player_id == me.player_id
       if world.puck.owner_hockeyist_id == me.id
         do_state :holding
@@ -173,11 +167,17 @@ class MyStrategy
     defending_y = my_net_center_y
     defending_y += (world.puck.y < defending_y ? 0.35 : -0.35) * game.goal_net_height;
     angle_to_defending = me.get_angle_to(defending_x, defending_y)
+
     movee.speed_up = 1.0
     movee.turn = angle_to_defending
+    if me_look_forward? && me_in_near_section?
+      movee.speed_up = -1.0
+      movee.turn = opposite_angle(angle_to_defending)
+    end
     movee.action = ActionType::TAKE_PUCK
+
     distance = me.get_distance_to(defending_x, defending_y)
-    if distance < 150
+    if distance < 100
       if ((my_net_center_y < defending_y && defending_y < me.y) || (my_net_center_y > defending_y && defending_y > me.y))
         # if me went outside the net
         movee.speed_up = 0.4

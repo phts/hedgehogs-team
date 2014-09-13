@@ -76,6 +76,10 @@ module Utils
   alias_method :bottom_near_section_xx, :near_section_xx
   alias_method :bottom_near_section_yy, :bottom_section_yy
 
+  def me_in_near_section?
+    near_section_xx.include?(me.x)
+  end
+
   def me_in_top_far_section?
     top_far_section_xx.include?(me.x) && top_far_section_yy.include?(me.y)
   end
@@ -96,6 +100,10 @@ module Utils
     @back_angles ||= opponent_on_the_left? ? LEFT_ANGLES : RIGHT_ANGLES
   end
 
+  def forward_angles
+    @forward_angles ||= opponent_on_the_left? ? RIGHT_ANGLES : LEFT_ANGLES
+  end
+
   def include_angle?(angles, value)
     angles.count{ |a| a.include?(value) } != 0
   end
@@ -110,6 +118,10 @@ module Utils
 
   def me_look_back?
     include_angle?(back_angles, me.angle)
+  end
+
+  def me_look_forward?
+    include_angle?(forward_angles, me.angle)
   end
 
   def top_far_corner_angles
@@ -173,6 +185,12 @@ module Utils
       return h if reachable_unit?(h)
     end
     nil
+  end
+
+  def opposite_angle(angle)
+    return Math::PI if angle == 0
+    return 0 if angle.abs == Math::PI
+    angle < 0 ? angle+Math::PI : angle-Math::PI
   end
 
   def debug(message = nil)
