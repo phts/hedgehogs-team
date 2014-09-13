@@ -163,7 +163,7 @@ class MyStrategy
 
   def defending
     defending_x = my_net_center_x
-    defending_x += opponent_on_the_left? ? -120 : 120
+    defending_x += opponent_on_the_left? ? -80 : 80
     defending_y = my_net_center_y
     defending_y += (world.puck.y < defending_y ? 0.35 : -0.35) * game.goal_net_height;
     angle_to_defending = me.get_angle_to(defending_x, defending_y)
