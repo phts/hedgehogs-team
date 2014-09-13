@@ -152,7 +152,7 @@ class MyStrategy
   def turning_to_net
     self.in_strike_position = true
     nety = opponent_net_center_y
-    nety += (me.y < nety ? 0.5 : -0.5) * game.goal_net_height;
+    nety += (me.y < nety ? 0.46 : -0.46) * game.goal_net_height;
     ang_to_net = me.get_angle_to(opponent_net_center_x, nety)
     movee.turn = ang_to_net
     if ang_to_net.abs < ENOUGH_STRIKE_ANGLE
@@ -171,7 +171,7 @@ class MyStrategy
     defending_x = my_net_center_x
     defending_x += opponent_on_the_left? ? -120 : 120
     defending_y = my_net_center_y
-    defending_y += (world.puck.y < defending_y ? 0.38 : -0.38) * game.goal_net_height;
+    defending_y += (world.puck.y < defending_y ? 0.35 : -0.35) * game.goal_net_height;
     angle_to_defending = me.get_angle_to(defending_x, defending_y)
     movee.speed_up = 1.0
     movee.turn = angle_to_defending

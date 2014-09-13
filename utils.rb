@@ -20,7 +20,7 @@ module Utils
   end
 
   def opponent_net_center_x
-    @opponent_net_center_x ||= 0.5 * (opponent_player.net_left + opponent_player.net_right)
+    @opponent_net_center_x ||= opponent_on_the_left? ? opponent_player.net_right : opponent_player.net_left
   end
 
   def opponent_net_center_y
@@ -28,7 +28,7 @@ module Utils
   end
 
   def my_net_center_x
-    @my_net_center_x ||= 0.5 * (my_player.net_left + my_player.net_right)
+    @my_net_center_x ||= opponent_on_the_left? ? my_player.net_left : my_player.net_right
   end
 
   def my_net_center_y
