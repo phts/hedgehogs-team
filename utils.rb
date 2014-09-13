@@ -172,6 +172,10 @@ module Utils
     player_hockeyists(player_id).min_by{ |h| h.get_distance_to_unit(unit) }
   end
 
+  def nearest_my_hockeyist_to_unit(unit)
+    nearest_hockeyist_to_unit(my_player.id, unit)
+  end
+
   def nearest_opponent_hockeyist_to_unit(unit)
     nearest_hockeyist_to_unit(opponent_player.id, unit)
   end
@@ -191,6 +195,10 @@ module Utils
     return Math::PI if angle == 0
     return 0 if angle.abs == Math::PI
     angle < 0 ? angle+Math::PI : angle-Math::PI
+  end
+
+  def units_equal?(u1, u2)
+    u1.id == u2.id
   end
 
   def debug(message = nil)

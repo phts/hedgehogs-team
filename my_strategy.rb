@@ -11,8 +11,6 @@ class MyStrategy
 
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
 
-  TEAMMATE_INDEX_TO_TAKING_ACTION = {0 => :taking, 1 => :defending}
-
   def move(me, world, game, move)
     @me = me
     @world = world
@@ -37,12 +35,13 @@ class MyStrategy
           do_state :supporting
         end
       end
-    elsif world.puck.owner_player_id == -1
-      reset_holding_state
-      do_state :taking
     else
       reset_holding_state
-      do_state(TEAMMATE_INDEX_TO_TAKING_ACTION[me.teammate_index] || :taking)
+      if units_equal?(nearest_my_hockeyist_to_unit(world.puck), me)
+        do_state :taking
+      else
+        do_state :defending
+      end
     end
   end
 
