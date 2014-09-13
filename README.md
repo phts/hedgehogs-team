@@ -2,7 +2,8 @@
 
 Стратегия для управления командой хоккеистов, написанная в рамках чемпионата [Russian AI Cup 2014 CodeHockey](http://russianaicup.ru/).
 
-[Правила](http://russianaicup.ru/p/rules)
+* [Мой профиль](http://russianaicup.ru/profile/phil.tsarik)
+* [Правила](http://russianaicup.ru/p/rules)
 
 ## Расписание
 
