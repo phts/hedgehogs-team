@@ -203,7 +203,7 @@ class MyStrategy
 
   def try_to_knock_down_opponent
     if reachable_opponent_hockeyist
-      movee.action = ActionType::SWING
+      movee.action = ActionType::STRIKE
     end
   end
 
