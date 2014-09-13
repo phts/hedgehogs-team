@@ -156,8 +156,12 @@ module Utils
     @opponent_player ||= world.get_opponent_player
   end
 
+  def player_hockeyists(player_id)
+    world.hockeyists.select{ |h| h.player_id == player_id && h.type != HockeyistType::GOALIE }
+  end
+
   def nearest_hockeyist_to_unit(player_id, unit)
-    world.hockeyists.select{ |h| h.player_id == player_id && h.type != HockeyistType::GOALIE }.min_by{ |h| h.get_distance_to_unit(unit) }
+    player_hockeyists(player_id).min_by{ |h| h.get_distance_to_unit(unit) }
   end
 
   def nearest_opponent_hockeyist_to_unit(unit)
@@ -166,6 +170,13 @@ module Utils
 
   def reachable_unit?(unit)
     me.get_distance_to_unit(unit) <= REACH_DISTANCE && REACH_ANGLES.include?(me.get_angle_to_unit(unit))
+  end
+
+  def reachable_opponent_hockeyist
+    player_hockeyists(opponent_player.id).each do |h|
+      return h if reachable_unit?(h)
+    end
+    nil
   end
 
   def debug(message = nil)

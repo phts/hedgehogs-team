@@ -202,7 +202,7 @@ class MyStrategy
   end
 
   def try_to_knock_down_opponent
-    if reachable_unit?(nearest_opponent_hockeyist_to_unit(me))
+    if reachable_opponent_hockeyist
       movee.action = ActionType::SWING
     end
   end
