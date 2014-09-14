@@ -54,9 +54,6 @@ class MyStrategy
   attr_accessor :strike_position
   attr_accessor :in_strike_position
 
-  attr_accessor :in_defending_position
-  attr_accessor :moving_direction_to_defence
-
   def do_state(value)
     if value != state
       reset_method = :"reset_#{state}_state"
@@ -71,11 +68,6 @@ class MyStrategy
   def reset_holding_state
     self.strike_position = nil
     self.in_strike_position = nil
-  end
-
-  def reset_defending_state
-    self.in_defending_position = false
-    self.moving_direction_to_defence = nil
   end
 
   def supporting
@@ -173,58 +165,20 @@ class MyStrategy
   end
 
   def defending
-    defending_x = x_from_my_vertical_side(10)
+    defending_x = x_from_my_vertical_side(120)
     defending_y = my_net_center_y
-    defending_y += (world.puck.y < defending_y ? 0.3 : -0.3) * game.goal_net_height;
     angle_to_defending = me.get_angle_to(defending_x, defending_y)
-    opposite_angle_to_defending = opposite_angle(angle_to_defending)
 
-    unless in_defending_position
-      if moving_direction_to_defence.nil?
-        # me_look_back? || me_in_far_section?
-        movee.speed_up = 1.0
-        movee.turn = angle_to_defending
-
-        if me_look_forward?
-          if me_look_up?
-            if me_in_top_near_section?
-              movee.speed_up = 1.0
-              movee.turn = angle_to_defending
-            elsif me_in_bottom_near_section?
-              movee.turn = opposite_angle_to_defending
-              movee.speed_up = -1.0
-            end
-          else
-            if me_in_top_near_section?
-              movee.speed_up = -1.0
-              movee.turn = opposite_angle_to_defending
-            elsif me_in_bottom_near_section?
-              movee.speed_up = 1.0
-              movee.turn = angle_to_defending
-            end
-          end
-        end
-        self.moving_direction_to_defence = movee.speed_up
-      else
-        if moving_direction_to_defence < 0
-          movee.speed_up = -1.0
-          movee.turn = opposite_angle_to_defending
-        else
-          movee.speed_up = 1.0
-          movee.turn = angle_to_defending
-        end
-      end
-    end
     movee.action = ActionType::TAKE_PUCK
+    movee.turn = angle_to_defending
+    movee.speed_up = 1.0
 
     distance = me.get_distance_to(defending_x, defending_y)
-    if distance < 40
-      self.in_defending_position = true
-      @moving_direction_to_defence_bak = moving_direction_to_defence unless moving_direction_to_defence.nil?
-      self.moving_direction_to_defence = nil
-
-      if @moving_direction_to_defence_bak
-        if @moving_direction_to_defence_bak < 0
+    if distance < 30
+      movee.speed_up = 0
+      if @speed_up_bak
+        # stop sharply (set opposite speed up)
+        if @speed_up_bak < 0
           movee.speed_up = 1.0
         else
           movee.speed_up = -1.0
@@ -232,15 +186,22 @@ class MyStrategy
         if me.speed_x.abs < 1 && me.speed_y.abs < 1
           movee.speed_up = 0
         end
-      else
-        movee.speed_up = 0
       end
       movee.turn = me.get_angle_to_unit(world.puck)
       if reachable_unit?(world.puck)
         movee.action = ActionType::STRIKE
       end
-    else
-      self.in_defending_position = false
+    elsif distance < 150
+      if angle_to_defending.abs < Math::PI/2
+        # if me looks at defending point
+        movee.turn = angle_to_defending
+        movee.speed_up = 0.5
+      else
+        # if me looks in a opposide side from defending point
+        movee.turn = opposite_angle(angle_to_defending)
+        movee.speed_up = -1.0
+      end
+      @speed_up_bak = movee.speed_up
     end
     try_to_knock_down_opponent
   end
