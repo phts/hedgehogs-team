@@ -10,7 +10,9 @@ new_version=$(($prev_version+1))
 new_version_tag="v$new_version"
 
 filename=hedgehogs-team-$new_version_tag.zip
-if [ -x zip ]; then
+
+command -v zip >/dev/null 2>&1
+if [ $? -eq 0 ]; then
     zip ./tmp/$filename my_strategy.rb utils.rb
 else
     echo "WARNING: 'zip' is not found. Please make '$filename' manually."
