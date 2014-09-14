@@ -205,7 +205,7 @@ module Utils
     puts "#{message}"
     puts "   x:#{me.x}; y:#{me.y}; a:#{me.angle}"
     puts "   top_far_section?:#{me_in_top_far_section?}; top_near_section?:#{me_in_top_near_section?}; bottom_far_section?:#{me_in_bottom_far_section?}; bottom_near_section?:#{me_in_bottom_near_section?}"
-    puts "   me_look_up?:#{me_look_up?}; me_look_down?:#{me_look_down?}; me_look_back?:#{me_look_back?}"
+    puts "   me_look_up?:#{me_look_up?}; me_look_down?:#{me_look_down?}; me_look_forward?:#{me_look_forward?}; me_look_back?:#{me_look_back?}"
     puts "   me_look_at_top_far_corner?:#{me_look_at_top_far_corner?}; me_look_at_top_near_corner?:#{me_look_at_top_near_corner?}"
     puts "   me_look_at_bottom_far_corner?:#{me_look_at_bottom_far_corner?}; me_look_at_bottom_near_corner?:#{me_look_at_bottom_near_corner?}"
   end
