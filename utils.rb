@@ -2,13 +2,14 @@ require "./model/hockeyist_type"
 
 module Utils
 
-  TOP_ANGLES = (-4..0)
-  BOTTOM_ANGLES = (0..4)
+  SIMPLE_PI = 4
+  TOP_ANGLES = (-SIMPLE_PI..0)
+  BOTTOM_ANGLES = (0..SIMPLE_PI)
   LEFT_ANGLES = [(-Math::PI/2)..(Math::PI/2)]
-  RIGHT_ANGLES = [(Math::PI/2)..4, -4..(-Math::PI/2)]
-  TOP_LEFT_CORNER_ANGLES = [(-Math::PI)..(-Math::PI/4), (3*Math::PI/4)..4]
+  RIGHT_ANGLES = [(Math::PI/2)..SIMPLE_PI, -SIMPLE_PI..(-Math::PI/2)]
+  TOP_LEFT_CORNER_ANGLES = [(-Math::PI)..(-Math::PI/4), (3*Math::PI/4)..SIMPLE_PI]
   TOP_RIGHT_CORNER_ANGLES = [(-3*Math::PI/4)..(Math::PI/4)]
-  BOTTOM_LEFT_CORNER_ANGLES = [(-Math::PI)..(-3*Math::PI/4), (Math::PI/4)..4]
+  BOTTOM_LEFT_CORNER_ANGLES = [(-Math::PI)..(-3*Math::PI/4), (Math::PI/4)..SIMPLE_PI]
   BOTTOM_RIGHT_CORNER_ANGLES = [(-Math::PI/4)..(3*Math::PI/4)]
 
   REACH_DISTANCE = 120 # rules (p.13)
