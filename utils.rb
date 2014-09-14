@@ -96,6 +96,10 @@ module Utils
     bottom_near_section_xx.include?(me.x) && bottom_near_section_yy.include?(me.y)
   end
 
+  def x_from_my_vertical_side(value)
+    my_net_center_x + (opponent_on_the_left? ? -value : value)
+  end
+
   def back_angles
     @back_angles ||= opponent_on_the_left? ? LEFT_ANGLES : RIGHT_ANGLES
   end
