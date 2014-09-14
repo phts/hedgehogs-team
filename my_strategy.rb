@@ -16,6 +16,13 @@ class MyStrategy
     @world = world
     @game = game
     @movee = move
+    @my_player = world.get_my_player
+
+    if my_player.just_scored_goal || my_player.just_missed_goal
+      # easter egg: when someone scored my hockeyists start having fun
+      do_state :having_fun
+      return
+    end
 
     if me.state == HockeyistState::SWINGING
       move.action = ActionType::STRIKE
@@ -49,6 +56,7 @@ class MyStrategy
   attr_reader :world
   attr_reader :game
   attr_reader :movee
+  attr_reader :my_player
 
   attr_accessor :state
   attr_accessor :strike_position
@@ -210,6 +218,14 @@ class MyStrategy
     if reachable_opponent_hockeyist
       movee.action = ActionType::STRIKE
     end
+  end
+
+  def having_fun
+    # fight with my opponent's hockeyists
+    opponent = nearest_opponent_hockeyist_to_unit(me)
+    movee.turn = me.get_angle_to_unit(opponent)
+    movee.speed_up = 1.0
+    try_to_knock_down_opponent
   end
 
 end

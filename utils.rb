@@ -161,10 +161,6 @@ module Utils
     include_angle?(bottom_near_corner_angles, me.angle)
   end
 
-  def my_player
-    @my_player ||= world.get_my_player
-  end
-
   def opponent_player
     @opponent_player ||= world.get_opponent_player
   end
