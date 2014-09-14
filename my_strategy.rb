@@ -10,7 +10,8 @@ class MyStrategy
   include Utils
 
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
-  STRIKE_POSITION_FROM_MY_SIDE_X = 544
+  STRIKE_POSITION_X_FROM_MY_SIDE = 700
+  STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE = 150
 
   def move(me, world, game, move)
     @me = me
@@ -98,10 +99,10 @@ class MyStrategy
 
   def calc_strike_position
     pos = []
-    top_strike_point_x = x_from_my_vertical_side(STRIKE_POSITION_FROM_MY_SIDE_X)
-    top_strike_point_y = game.rink_top + 100
+    top_strike_point_x = x_from_my_vertical_side(STRIKE_POSITION_X_FROM_MY_SIDE)
+    top_strike_point_y = game.rink_top + STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE
     bottom_strike_point_x = top_strike_point_x
-    bottom_strike_point_y = game.rink_bottom - 100
+    bottom_strike_point_y = game.rink_bottom - STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE
 
     if me.get_distance_to(defending_point_x, defending_point_y) < 100
       # if took the puck probably while defencing
@@ -115,7 +116,7 @@ class MyStrategy
     end
     angle_to_top_strike_point = me.get_angle_to(top_strike_point_x, top_strike_point_y)
     angle_to_bottom_strike_point = me.get_angle_to(bottom_strike_point_x, bottom_strike_point_y)
-    if (me_nearer_than?(STRIKE_POSITION_FROM_MY_SIDE_X))
+    if (me_nearer_than?(STRIKE_POSITION_X_FROM_MY_SIDE))
       if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
         pos << [top_strike_point_x, top_strike_point_y]
       else
