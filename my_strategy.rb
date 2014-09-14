@@ -102,6 +102,17 @@ class MyStrategy
     top_strike_point_y = game.rink_top + 100
     bottom_strike_point_x = top_strike_point_x
     bottom_strike_point_y = game.rink_bottom - 100
+
+    if me.get_distance_to(defending_point_x, defending_point_y) < 100
+      # if took the puck probably while defencing
+      # then go to the opposide side where the opponent was from
+      if me_look_up?
+        pos << [bottom_strike_point_x, bottom_strike_point_y]
+      else
+        pos << [top_strike_point_x, top_strike_point_y]
+      end
+      return pos
+    end
     angle_to_top_strike_point = me.get_angle_to(top_strike_point_x, top_strike_point_y)
     angle_to_bottom_strike_point = me.get_angle_to(bottom_strike_point_x, bottom_strike_point_y)
     if (me_nearer_than?(STRIKE_POSITION_FROM_MY_SIDE_X))
@@ -157,16 +168,22 @@ class MyStrategy
     try_to_knock_down_opponent
   end
 
+  def defending_point_x
+    @defending_point_x ||= x_from_my_vertical_side(120)
+  end
+
+  def defending_point_y
+    @defending_point_y ||= my_net_center_y
+  end
+
   def defending
-    defending_x = x_from_my_vertical_side(120)
-    defending_y = my_net_center_y
-    angle_to_defending = me.get_angle_to(defending_x, defending_y)
+    angle_to_defending = me.get_angle_to(defending_point_x, defending_point_y)
 
     movee.action = ActionType::TAKE_PUCK
     movee.turn = angle_to_defending
     movee.speed_up = 1.0
 
-    distance = me.get_distance_to(defending_x, defending_y)
+    distance = me.get_distance_to(defending_point_x, defending_point_y)
     if distance < 30
       movee.speed_up = 0
       if @speed_up_bak
