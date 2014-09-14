@@ -101,6 +101,10 @@ module Utils
     my_net_center_x + (opponent_on_the_left? ? -value : value)
   end
 
+  def me_nearer_than?(value)
+    opponent_on_the_left? ? (me.x > value) : (me.x < value)
+  end
+
   def back_angles
     @back_angles ||= opponent_on_the_left? ? LEFT_ANGLES : RIGHT_ANGLES
   end

@@ -10,6 +10,7 @@ class MyStrategy
   include Utils
 
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
+  STRIKE_POSITION_FROM_MY_SIDE_X = 544
 
   def move(me, world, game, move)
     @me = me
@@ -89,62 +90,52 @@ class MyStrategy
   end
 
   def holding
-    go_to_strike_position
+    unless strike_position
+      self.strike_position = calc_strike_position
+    end
+    go
   end
 
-  def go_to_strike_position
-    unless strike_position
-      if me_in_top_far_section? && me_look_at_bottom_far_corner?
-        self.strike_position = :top_center
-      elsif me_in_bottom_far_section? && me_look_at_bottom_near_corner?
-        self.strike_position = :top_center
-      elsif me_in_bottom_near_section? && me_look_up?
-        self.strike_position = :top_center
-      elsif me_in_bottom_near_section? && me_look_back? ||
-         me_in_top_near_section? && me_look_up?
-        self.strike_position = :top_center
-      elsif me_in_bottom_far_section? && me_look_at_top_far_corner?
-        self.strike_position = :bottom_center
-      elsif me_in_top_far_section? && me_look_at_top_near_corner?
-        self.strike_position = :bottom_center
-      elsif me_in_top_near_section? && me_look_down?
-        self.strike_position = :bottom_center
-      elsif me_in_top_near_section? && me_look_back? ||
-         me_in_bottom_near_section? && me_look_down?
-        self.strike_position = :bottom_center
+  def calc_strike_position
+    pos = []
+    top_strike_point_x = x_from_my_vertical_side(STRIKE_POSITION_FROM_MY_SIDE_X)
+    top_strike_point_y = game.rink_top + 100
+    bottom_strike_point_x = top_strike_point_x
+    bottom_strike_point_y = game.rink_bottom - 100
+    angle_to_top_strike_point = me.get_angle_to(top_strike_point_x, top_strike_point_y)
+    angle_to_bottom_strike_point = me.get_angle_to(bottom_strike_point_x, bottom_strike_point_y)
+    if (me_nearer_than?(STRIKE_POSITION_FROM_MY_SIDE_X))
+      if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
+        pos << [top_strike_point_x, top_strike_point_y]
       else
-        # Ususally on start when angle == 3.14
-        self.strike_position = :top_center
+        pos << [bottom_strike_point_x, bottom_strike_point_y]
+      end
+    else
+      pos << [x_from_my_vertical_side(300), my_net_center_y]
+      if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
+        pos << [bottom_strike_point_x, bottom_strike_point_y]
+      else
+        pos << [top_strike_point_x, top_strike_point_y]
       end
     end
-    send :"go_to_#{strike_position}"
+    pos
   end
 
-  def go_to_top_center
+  def go
     movee.speed_up = 1.0
     if in_strike_position
       turn_to_net
       return
     end
-    centerx = rink_width/2
-    centery = game.rink_top + 100
-    movee.turn = me.get_angle_to(centerx, centery)
-    if me.get_distance_to(centerx, centery) < 100
-      turn_to_net
-    end
-  end
-
-  def go_to_bottom_center
-    movee.speed_up = 1.0
-    if in_strike_position
-      turn_to_net
-      return
-    end
-    centerx = rink_width/2
-    centery = game.rink_bottom - 100
-    movee.turn = me.get_angle_to(centerx, centery)
-    if me.get_distance_to(centerx, centery) < 100
-      turn_to_net
+    point = strike_position.first
+    x = point[0]
+    y = point[1]
+    movee.turn = me.get_angle_to(x, y)
+    if me.get_distance_to(x, y) < 100
+      strike_position.shift
+      if strike_position.empty?
+        turn_to_net
+      end
     end
   end
 
