@@ -24,23 +24,18 @@ class MyStrategy
 
     if world.puck.owner_player_id == me.player_id
       if world.puck.owner_hockeyist_id == me.id
-        reset_defending_state
         do_state :holding
       else
-        reset_holding_state
         if near_section_xx.include?(world.puck.x)
           # if puck is on the near half
           do_state :defending
         else
           # if puck is on the far half
-          reset_defending_state
           do_state :supporting
         end
       end
     else
-      reset_holding_state
       if units_equal?(nearest_my_hockeyist_to_unit(world.puck), me)
-        reset_defending_state
         do_state :taking
       else
         do_state :defending
@@ -63,6 +58,12 @@ class MyStrategy
   attr_accessor :moving_direction_to_defence
 
   def do_state(value)
+    if value != state
+      reset_method = :"reset_#{state}_state"
+      if respond_to?(reset_method, true)
+        send reset_method
+      end
+    end
     self.state = value
     send(value)
   end
@@ -88,10 +89,10 @@ class MyStrategy
   end
 
   def holding
-    do_state :going_to_strike_position
+    go_to_strike_position
   end
 
-  def going_to_strike_position
+  def go_to_strike_position
     unless strike_position
       if me_in_top_far_section? && me_look_at_bottom_far_corner?
         # TODO move to bottom far section center first
@@ -122,38 +123,38 @@ class MyStrategy
         self.strike_position = :top_center
       end
     end
-    do_state :"going_to_#{strike_position}"
+    send :"go_to_#{strike_position}"
   end
 
-  def going_to_top_center
+  def go_to_top_center
     movee.speed_up = 1.0
     if in_strike_position
-      do_state :turning_to_net
+      turn_to_net
       return
     end
     centerx = rink_width/2
     centery = game.rink_top + 100
     movee.turn = me.get_angle_to(centerx, centery)
     if me.get_distance_to(centerx, centery) < 100
-      do_state :turning_to_net
+      turn_to_net
     end
   end
 
-  def going_to_bottom_center
+  def go_to_bottom_center
     movee.speed_up = 1.0
     if in_strike_position
-      do_state :turning_to_net
+      turn_to_net
       return
     end
     centerx = rink_width/2
     centery = game.rink_bottom - 100
     movee.turn = me.get_angle_to(centerx, centery)
     if me.get_distance_to(centerx, centery) < 100
-      do_state :turning_to_net
+      turn_to_net
     end
   end
 
-  def turning_to_net
+  def turn_to_net
     self.in_strike_position = true
     nety = opponent_net_center_y
     nety += (me.y < nety ? 0.46 : -0.46) * game.goal_net_height;
