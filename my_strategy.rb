@@ -217,9 +217,14 @@ class MyStrategy
     try_to_knock_down_opponent
   end
 
-  def try_to_knock_down_opponent
-    if reachable_opponent_hockeyist
-      movee.action = ActionType::STRIKE
+  def try_to_knock_down_opponent(always = false)
+    h = reachable_opponent_hockeyist
+    if h
+      if always || h.get_angle_to_unit(me).abs < Math::PI/2
+        # strike only if the opponent looks at me
+        # otherwise strike can push him and his speed will be increased
+        movee.action = ActionType::STRIKE
+      end
     end
   end
 
@@ -228,7 +233,7 @@ class MyStrategy
     opponent = nearest_opponent_hockeyist_to_unit(me)
     movee.turn = me.get_angle_to_unit(opponent)
     movee.speed_up = 1.0
-    try_to_knock_down_opponent
+    try_to_knock_down_opponent(true)
   end
 
 end
