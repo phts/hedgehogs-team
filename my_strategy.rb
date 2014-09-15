@@ -243,11 +243,20 @@ class MyStrategy
   end
 
   def having_fun
-    # fight with my opponent's hockeyists
-    opponent = nearest_opponent_hockeyist_to_unit(me)
-    movee.turn = me.get_angle_to_unit(opponent)
     movee.speed_up = 1.0
-    try_to_knock_down_opponent(true)
+    if my_player.just_scored_goal
+      # fight with teammates
+      teammate = nearest_my_hockeyist_to_unit(me, me)
+      movee.turn = me.get_angle_to_unit(teammate)
+      if reachable_unit?(teammate)
+        movee.action = ActionType::STRIKE
+      end
+    else
+      # fight with opponent's hockeyists
+      opponent = nearest_opponent_hockeyist_to_unit(me)
+      movee.turn = me.get_angle_to_unit(opponent)
+      try_to_knock_down_opponent(true)
+    end
   end
 
 end

@@ -169,16 +169,16 @@ module Utils
     @opponent_player ||= world.get_opponent_player
   end
 
-  def player_hockeyists(player_id)
-    world.hockeyists.select{ |h| h.player_id == player_id && h.type != HockeyistType::GOALIE }
+  def player_hockeyists(player_id, except = nil)
+    world.hockeyists.select{ |h| h.player_id == player_id && (except.nil? || h.id != except.id) && h.type != HockeyistType::GOALIE }
   end
 
-  def nearest_hockeyist_to_unit(player_id, unit)
-    player_hockeyists(player_id).min_by{ |h| h.get_distance_to_unit(unit) }
+  def nearest_hockeyist_to_unit(player_id, unit, except = nil)
+    player_hockeyists(player_id, except).min_by{ |h| h.get_distance_to_unit(unit) }
   end
 
-  def nearest_my_hockeyist_to_unit(unit)
-    nearest_hockeyist_to_unit(my_player.id, unit)
+  def nearest_my_hockeyist_to_unit(unit, except = nil)
+    nearest_hockeyist_to_unit(my_player.id, unit, except)
   end
 
   def nearest_opponent_hockeyist_to_unit(unit)
