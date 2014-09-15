@@ -36,11 +36,11 @@ class MyStrategy
         do_state :holding
       else
         if near_section_xx.include?(world.puck.x)
-          # if puck is on the near half
-          do_state :defending
-        else
           # if puck is on the far half
           do_state :supporting
+        else
+          # if puck is on the near half
+          do_state :defending
         end
       end
     else
