@@ -45,7 +45,12 @@ class MyStrategy
       end
     else
       if units_equal?(nearest_my_hockeyist_to_unit(world.puck), me)
-        do_state :taking
+        if world.puck.owner_hockeyist_id == -1
+          # if nobody owns the puck
+          do_state :picking_up
+        else
+          do_state :taking_away
+        end
       else
         do_state :defending
       end
@@ -162,10 +167,19 @@ class MyStrategy
     end
   end
 
-  def taking
+  def picking_up
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to_unit(world.puck)
     movee.action = ActionType::TAKE_PUCK
+    try_to_knock_down_opponent
+  end
+
+  def taking_away
+    movee.speed_up = 1.0
+    movee.turn = me.get_angle_to_unit(world.puck)
+    if reachable_unit?(world.puck)
+      movee.action = ActionType::STRIKE
+    end
     try_to_knock_down_opponent
   end
 
