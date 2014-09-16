@@ -211,11 +211,11 @@ class MyStrategy
       if angle_to_defending.abs < Math::PI/2
         # if me looks at defending point
         movee.turn = angle_to_defending
-        movee.speed_up = 0.5
+        movee.speed_up = 0.4
       else
         # if me looks in a opposide side from defending point
         movee.turn = opposite_angle(angle_to_defending)
-        movee.speed_up = -1.0
+        movee.speed_up = -0.6
       end
       @speed_up_bak = movee.speed_up
     end
