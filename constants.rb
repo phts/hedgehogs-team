@@ -130,6 +130,14 @@ module Constants
   alias_method :bottom_middle_point_x, :top_middle_point_x
   alias_method :bottom_middle_point_y, :bottom_strike_point_y
 
+  def top_near_point_x
+    $top_near_point_x ||= x_from_my_vertical_side(400)
+  end
+
+  alias_method :top_near_point_y, :my_net_center_y
+  alias_method :bottom_near_point_x, :top_near_point_x
+  alias_method :bottom_near_point_y, :top_near_point_y
+
   def defending_point_x
     $defending_point_x ||= x_from_my_vertical_side(120)
   end

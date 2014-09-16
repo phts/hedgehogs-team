@@ -125,11 +125,12 @@ class MyStrategy
         pos << [bottom_strike_point_x, bottom_strike_point_y]
       end
     else
-      pos << [x_from_my_vertical_side(300), my_net_center_y]
       if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
+        pos << [top_near_point_x, top_near_point_y]
         pos << [bottom_middle_point_x, bottom_middle_point_y]
         pos << [bottom_strike_point_x, bottom_strike_point_y]
       else
+        pos << [bottom_near_point_x, bottom_near_point_y]
         pos << [top_middle_point_x, top_middle_point_y]
         pos << [top_strike_point_x, top_strike_point_y]
       end
