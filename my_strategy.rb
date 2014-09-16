@@ -228,8 +228,8 @@ class MyStrategy
   def try_to_knock_down_opponent(always = false)
     h = reachable_opponent_hockeyist
     if h
-      if always || h.get_angle_to_unit(me).abs < Math::PI/2
-        # strike only if the opponent looks at me
+      if always || h.get_angle_to_unit(me).abs < Math::PI/2 || world.puck.owner_hockeyist_id == h.id
+        # strike only if the opponent looks at me or if he owns the puck (any directions)
         # otherwise strike can push him and his speed will be increased
         movee.action = ActionType::STRIKE
       end
