@@ -10,8 +10,8 @@ class MyStrategy
   include Utils
 
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
-  STRIKE_POSITION_X_FROM_MY_SIDE = 700
-  STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE = 150
+  STRIKE_POINT_X_FROM_MY_SIDE = 700
+  STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE = 150
 
   def move(me, world, game, move)
     @me = me
@@ -104,10 +104,10 @@ class MyStrategy
 
   def calc_strike_position
     pos = []
-    top_strike_point_x = x_from_my_vertical_side(STRIKE_POSITION_X_FROM_MY_SIDE)
-    top_strike_point_y = game.rink_top + STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE
+    top_strike_point_x = x_from_my_vertical_side(STRIKE_POINT_X_FROM_MY_SIDE)
+    top_strike_point_y = game.rink_top + STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
     bottom_strike_point_x = top_strike_point_x
-    bottom_strike_point_y = game.rink_bottom - STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE
+    bottom_strike_point_y = game.rink_bottom - STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
     top_middle_point_x = rink_center_x
     top_middle_point_y = top_strike_point_y
     bottom_middle_point_x = top_middle_point_x
@@ -127,7 +127,7 @@ class MyStrategy
     end
     angle_to_top_strike_point = me.get_angle_to(top_strike_point_x, top_strike_point_y)
     angle_to_bottom_strike_point = me.get_angle_to(bottom_strike_point_x, bottom_strike_point_y)
-    if (me_nearer_than?(STRIKE_POSITION_X_FROM_MY_SIDE))
+    if (me_nearer_than?(STRIKE_POINT_X_FROM_MY_SIDE))
       if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
         pos << [top_middle_point_x, top_middle_point_y]
         pos << [top_strike_point_x, top_strike_point_y]
