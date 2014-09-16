@@ -105,10 +105,12 @@ class MyStrategy
     if me.get_distance_to(defending_point_x, defending_point_y) < 100
       # if took the puck probably while defencing
       # then go to the opposide side where the opponent was from
-      if me_look_up?
+      if in_top_section?(nearest_opponent_hockeyist_to_unit(me))
+        # if nearest opponent in the top section then move down
         pos << [bottom_middle_point_x, bottom_middle_point_y]
         pos << [bottom_strike_point_x, bottom_strike_point_y]
       else
+        # if nearest opponent in the bottom section then move up
         pos << [top_middle_point_x, top_middle_point_y]
         pos << [top_strike_point_x, top_strike_point_y]
       end

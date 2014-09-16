@@ -7,6 +7,10 @@ module Utils
     near_section_xx.include?(me.x)
   end
 
+  def in_top_section?(unit)
+    top_section_yy.include?(unit.y)
+  end
+
   def me_in_top_far_section?
     top_far_section_xx.include?(me.x) && top_far_section_yy.include?(me.y)
   end
