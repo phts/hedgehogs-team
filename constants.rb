@@ -22,8 +22,8 @@ module Constants
   end
 
   def opponent_on_the_left?
-    return $opponent_on_the_left unless $opponent_on_the_left.nil?
-    $opponent_on_the_left = opponent_player.net_left < rink_center_x
+    $opponent_on_the_left = opponent_player.net_left < rink_center_x if $opponent_on_the_left.nil?
+    $opponent_on_the_left
   end
 
   def opponent_net_center_x
