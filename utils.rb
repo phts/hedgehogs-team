@@ -44,6 +44,10 @@ module Utils
     @rink_height ||= game.rink_bottom-game.rink_top
   end
 
+  def rink_center_x
+    @rink_center_x ||= (game.rink_right+game.rink_left) * 0.5
+  end
+
   def left_section_xx
     @left_section_xx ||= game.rink_left..(game.rink_left + rink_width/2)
   end

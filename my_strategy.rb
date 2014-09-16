@@ -108,13 +108,19 @@ class MyStrategy
     top_strike_point_y = game.rink_top + STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE
     bottom_strike_point_x = top_strike_point_x
     bottom_strike_point_y = game.rink_bottom - STRIKE_POSITION_Y_FROM_HORIZONTAL_SIDE
+    top_middle_point_x = rink_center_x
+    top_middle_point_y = top_strike_point_y
+    bottom_middle_point_x = top_middle_point_x
+    bottom_middle_point_y = bottom_strike_point_y
 
     if me.get_distance_to(defending_point_x, defending_point_y) < 100
       # if took the puck probably while defencing
       # then go to the opposide side where the opponent was from
       if me_look_up?
+        pos << [bottom_middle_point_x, bottom_middle_point_y]
         pos << [bottom_strike_point_x, bottom_strike_point_y]
       else
+        pos << [top_middle_point_x, top_middle_point_y]
         pos << [top_strike_point_x, top_strike_point_y]
       end
       return pos
@@ -123,15 +129,19 @@ class MyStrategy
     angle_to_bottom_strike_point = me.get_angle_to(bottom_strike_point_x, bottom_strike_point_y)
     if (me_nearer_than?(STRIKE_POSITION_X_FROM_MY_SIDE))
       if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
+        pos << [top_middle_point_x, top_middle_point_y]
         pos << [top_strike_point_x, top_strike_point_y]
       else
+        pos << [bottom_middle_point_x, bottom_middle_point_y]
         pos << [bottom_strike_point_x, bottom_strike_point_y]
       end
     else
       pos << [x_from_my_vertical_side(300), my_net_center_y]
       if angle_to_top_strike_point.abs < angle_to_bottom_strike_point.abs
+        pos << [bottom_middle_point_x, bottom_middle_point_y]
         pos << [bottom_strike_point_x, bottom_strike_point_y]
       else
+        pos << [top_middle_point_x, top_middle_point_y]
         pos << [top_strike_point_x, top_strike_point_y]
       end
     end
