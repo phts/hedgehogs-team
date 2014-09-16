@@ -4,14 +4,12 @@ require './model/move'
 require './model/hockeyist'
 require './model/world'
 require './model/hockeyist_state'
+require './constants'
 require './utils'
 
 class MyStrategy
+  include Constants
   include Utils
-
-  ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
-  STRIKE_POINT_X_FROM_MY_SIDE = 700
-  STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE = 150
 
   def move(me, world, game, move)
     @me = me
@@ -104,15 +102,6 @@ class MyStrategy
 
   def calc_strike_position
     pos = []
-    top_strike_point_x = x_from_my_vertical_side(STRIKE_POINT_X_FROM_MY_SIDE)
-    top_strike_point_y = game.rink_top + STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
-    bottom_strike_point_x = top_strike_point_x
-    bottom_strike_point_y = game.rink_bottom - STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
-    top_middle_point_x = rink_center_x
-    top_middle_point_y = top_strike_point_y
-    bottom_middle_point_x = top_middle_point_x
-    bottom_middle_point_y = bottom_strike_point_y
-
     if me.get_distance_to(defending_point_x, defending_point_y) < 100
       # if took the puck probably while defencing
       # then go to the opposide side where the opponent was from
@@ -191,14 +180,6 @@ class MyStrategy
       movee.action = ActionType::STRIKE
     end
     try_to_knock_down_opponent
-  end
-
-  def defending_point_x
-    @defending_point_x ||= x_from_my_vertical_side(120)
-  end
-
-  def defending_point_y
-    @defending_point_y ||= my_net_center_y
   end
 
   def defending
