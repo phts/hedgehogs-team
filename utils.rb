@@ -64,6 +64,22 @@ module Utils
     u1.id == u2.id
   end
 
+  def overtime?
+    world.tick >= world.tick_count
+  end
+
+  def losing_more_than_by?(points)
+    opponent_player.goal_count - my_player.goal_count >= points
+  end
+
+  def winning?
+    my_player.goal_count > opponent_player.goal_count
+  end
+
+  def panic_mode?
+    !!$panic_mode
+  end
+
   def debug(message = nil)
     puts "#{message}"
     puts "   #{me.teammate_index+1} x:#{me.x} y:#{me.y} a:#{me.angle}"

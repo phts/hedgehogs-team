@@ -17,6 +17,7 @@ class MyStrategy
     @game = game
     @movee = move
     @my_player = world.get_my_player
+    @opponent_player = world.get_opponent_player
 
     if my_player.just_scored_goal || my_player.just_missed_goal
       # easter egg: when someone scored my hockeyists start having fun
@@ -29,16 +30,28 @@ class MyStrategy
       return
     end
 
+    if overtime? || losing_more_than_by?(2)
+      # if I'm losing or when overtime turn on "Panic Mode"
+      $panic_mode = true
+    end
+    if winning?
+      $panic_mode = false
+    end
+
     if world.puck.owner_player_id == me.player_id
       if world.puck.owner_hockeyist_id == me.id
         do_state :holding
       else
-        if in_near_section?(world.puck)
-          # if puck is on the far half
+        if panic_mode?
           do_state :supporting
         else
-          # if puck is on the near half
-          do_state :defending
+          if in_near_section?(world.puck)
+            # if puck is on the far half
+            do_state :supporting
+          else
+            # if puck is on the near half
+            do_state :defending
+          end
         end
       end
     else
@@ -50,7 +63,11 @@ class MyStrategy
           do_state :taking_away
         end
       else
-        do_state :defending
+        if panic_mode?
+          do_state :supporting
+        else
+          do_state :defending
+        end
       end
     end
   end
@@ -62,6 +79,7 @@ class MyStrategy
   attr_reader :game
   attr_reader :movee
   attr_reader :my_player
+  attr_reader :opponent_player
 
   attr_accessor :state
   attr_accessor :strike_position

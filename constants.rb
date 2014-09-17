@@ -7,10 +7,6 @@ module Constants
   STRIKE_POINT_X_FROM_MY_SIDE = 700
   STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE = 150
 
-  def opponent_player
-    $opponent_player ||= world.get_opponent_player
-  end
-
   def opponent_on_the_left?
     $opponent_on_the_left = opponent_player.net_left < rink_center_x if $opponent_on_the_left.nil?
     $opponent_on_the_left
