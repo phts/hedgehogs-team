@@ -4,7 +4,19 @@ require './constants'
 module Utils
 
   def in_top_section?(unit)
-    top_section_yy.include?(unit.y)
+    unit.y <= rink_center_y
+  end
+
+  def in_right_section?(unit)
+    unit.x >= rink_center_x
+  end
+
+  def in_left_section?(unit)
+    unit.x <= rink_center_x
+  end
+
+  def in_near_section?(unit)
+    opponent_on_the_left? ? in_right_section?(unit) : in_left_section?(unit)
   end
 
   def x_from_my_vertical_side(value)

@@ -33,7 +33,7 @@ class MyStrategy
       if world.puck.owner_hockeyist_id == me.id
         do_state :holding
       else
-        if near_section_xx.include?(world.puck.x)
+        if in_near_section?(world.puck)
           # if puck is on the far half
           do_state :supporting
         else

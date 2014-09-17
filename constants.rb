@@ -44,20 +44,8 @@ module Constants
     $rink_center_x ||= (game.rink_right+game.rink_left) * 0.5
   end
 
-  def left_section_xx
-    $left_section_xx ||= game.rink_left..(game.rink_left + rink_width/2)
-  end
-
-  def right_section_xx
-    $right_section_xx ||= (game.rink_left + rink_width/2)..game.rink_right
-  end
-
-  def near_section_xx
-    $near_section_xx ||= opponent_on_the_left? ? right_section_xx : left_section_xx
-  end
-
-  def top_section_yy
-    $top_section_yy ||= game.rink_top..(game.rink_top + rink_height/2)
+  def rink_center_y
+    $rink_center_y ||= (game.rink_bottom+game.rink_top) * 0.5
   end
 
   def top_strike_point_x
