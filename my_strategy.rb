@@ -30,8 +30,9 @@ class MyStrategy
       return
     end
 
-    if overtime? || losing_more_than_by?(2)
-      # if I'm losing or when overtime turn on "Panic Mode"
+    if overtime? || losing_more_than_by?(2) || (losing? && game_ends_in_less_than?(1000))
+      # if I'm losing or when overtime or when losing and game is almost ended
+      # then turn on "Panic Mode"
       $panic_mode = true
     end
     if winning?

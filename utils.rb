@@ -72,8 +72,16 @@ module Utils
     opponent_player.goal_count - my_player.goal_count >= points
   end
 
+  def losing?
+    my_player.goal_count < opponent_player.goal_count
+  end
+
   def winning?
     my_player.goal_count > opponent_player.goal_count
+  end
+
+  def game_ends_in_less_than?(tick_count)
+    world.tick_count - world.tick <= tick_count
   end
 
   def panic_mode?
