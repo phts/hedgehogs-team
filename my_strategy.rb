@@ -30,8 +30,9 @@ class MyStrategy
       return
     end
 
-    if overtime? || losing_more_than_by?(2) || (losing? && game_ends_in_less_than?(1000))
+    if (overtime? && my_player.goal_count != 0) || losing_more_than_by?(2) || (losing? && game_ends_in_less_than?(1000))
       # if I'm losing or when overtime or when losing and game is almost ended
+      # except if overtime and 0:0 score (goalkeepers are gone, my hockeyist should defend the net)
       # then turn on "Panic Mode"
       $panic_mode = true
     end
