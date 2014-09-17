@@ -1,15 +1,5 @@
 module Constants
 
-  SIMPLE_PI = 4
-  TOP_ANGLES = (-SIMPLE_PI..0)
-  BOTTOM_ANGLES = (0..SIMPLE_PI)
-  LEFT_ANGLES = [(-Math::PI/2)..(Math::PI/2)]
-  RIGHT_ANGLES = [(Math::PI/2)..SIMPLE_PI, -SIMPLE_PI..(-Math::PI/2)]
-  TOP_LEFT_CORNER_ANGLES = [(-Math::PI)..(-Math::PI/4), (3*Math::PI/4)..SIMPLE_PI]
-  TOP_RIGHT_CORNER_ANGLES = [(-3*Math::PI/4)..(Math::PI/4)]
-  BOTTOM_LEFT_CORNER_ANGLES = [(-Math::PI)..(-3*Math::PI/4), (Math::PI/4)..SIMPLE_PI]
-  BOTTOM_RIGHT_CORNER_ANGLES = [(-Math::PI/4)..(3*Math::PI/4)]
-
   REACH_DISTANCE = 120 # rules (p.13)
   REACH_ANGLES = ((-Math::PI/12)..(Math::PI/12)) # rules (p.13)
 
@@ -62,53 +52,12 @@ module Constants
     $right_section_xx ||= (game.rink_left + rink_width/2)..game.rink_right
   end
 
-  def far_section_xx
-    $far_section_xx ||= opponent_on_the_left? ? left_section_xx : right_section_xx
-  end
-
   def near_section_xx
     $near_section_xx ||= opponent_on_the_left? ? right_section_xx : left_section_xx
   end
 
   def top_section_yy
     $top_section_yy ||= game.rink_top..(game.rink_top + rink_height/2)
-  end
-
-  def bottom_section_yy
-    $bottom_section_yy ||= (game.rink_top + rink_height/2)..game.rink_bottom
-  end
-
-  alias_method :top_far_section_xx, :far_section_xx
-  alias_method :top_far_section_yy, :top_section_yy
-  alias_method :bottom_far_section_xx, :far_section_xx
-  alias_method :bottom_far_section_yy, :bottom_section_yy
-  alias_method :top_near_section_xx, :near_section_xx
-  alias_method :top_near_section_yy, :top_section_yy
-  alias_method :bottom_near_section_xx, :near_section_xx
-  alias_method :bottom_near_section_yy, :bottom_section_yy
-
-  def back_angles
-    $back_angles ||= opponent_on_the_left? ? LEFT_ANGLES : RIGHT_ANGLES
-  end
-
-  def forward_angles
-    $forward_angles ||= opponent_on_the_left? ? RIGHT_ANGLES : LEFT_ANGLES
-  end
-
-  def top_far_corner_angles
-    $top_far_corner_angles ||= opponent_on_the_left? ? TOP_LEFT_CORNER_ANGLES : TOP_RIGHT_CORNER_ANGLES
-  end
-
-  def top_near_corner_angles
-    $top_near_corner_angles ||= opponent_on_the_left? ? TOP_RIGHT_CORNER_ANGLES : TOP_LEFT_CORNER_ANGLES
-  end
-
-  def bottom_far_corner_angles
-    $bottom_far_corner_angles ||= opponent_on_the_left? ? BOTTOM_LEFT_CORNER_ANGLES : BOTTOM_RIGHT_CORNER_ANGLES
-  end
-
-  def bottom_near_corner_angles
-    $bottom_near_corner_angles ||= opponent_on_the_left? ? BOTTOM_RIGHT_CORNER_ANGLES : BOTTOM_LEFT_CORNER_ANGLES
   end
 
   def top_strike_point_x
