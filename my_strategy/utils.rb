@@ -31,6 +31,10 @@ module Utils
     opponent_on_the_left? ? (me.x > value) : (me.x < value)
   end
 
+  def my_hockeyists_own_puck?
+    world.puck.owner_player_id == me.player_id
+  end
+
   def player_hockeyists(player_id, except = nil)
     world.hockeyists.select{ |h| h.player_id == player_id && (except.nil? || h.id != except.id) && h.type != HockeyistType::GOALIE }
   end
@@ -111,7 +115,9 @@ module Utils
   def go_to_angle(angle)
     movee.speed_up = 1.0
     fast_turn(angle_to_defending)
-    movee.action = ActionType::TAKE_PUCK
+    unless my_hockeyists_own_puck?
+      movee.action = ActionType::TAKE_PUCK
+    end
     try_to_knock_down_opponent
   end
 

@@ -40,7 +40,7 @@ class MyStrategy
       $panic_mode = false
     end
 
-    if world.puck.owner_player_id == me.player_id
+    if my_hockeyists_own_puck?
       # if my hockeyists own the puck
       if world.puck.owner_hockeyist_id == me.id
         # if me owns the puck
