@@ -194,7 +194,7 @@ class MyStrategy
   def turn_to_net
     self.in_strike_position = true
     nety = opponent_net_center_y
-    nety += (me.y < nety ? 0.46 : -0.46) * game.goal_net_height;
+    nety += (in_top_section?(me) ? 0.46 : -0.46) * game.goal_net_height;
     ang_to_net = me.get_angle_to(opponent_net_center_x, nety)
     movee.turn = ang_to_net
     if ang_to_net.abs < ENOUGH_STRIKE_ANGLE
