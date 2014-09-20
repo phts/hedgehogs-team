@@ -19,6 +19,10 @@ module Utils
     opponent_on_the_left? ? in_right_section?(unit) : in_left_section?(unit)
   end
 
+  def in_far_section?(unit)
+    opponent_on_the_left? ? in_left_section?(unit) : in_right_section?(unit)
+  end
+
   def x_from_my_vertical_side(value)
     my_net_center_x + (opponent_on_the_left? ? -value : value)
   end
@@ -49,6 +53,14 @@ module Utils
 
   def nearest_opponent_hockeyist_to(x, y)
     nearest_hockeyist_to(opponent_player.id, x, y)
+  end
+
+  def opponent_hockeyists_nearer_to_unit_than(unit, distance)
+    arr = []
+    player_hockeyists(opponent_player.id).each do |h|
+      arr << h if unit.get_distance_to_unit(h) < distance
+    end
+    arr
   end
 
   def reachable_unit?(unit)

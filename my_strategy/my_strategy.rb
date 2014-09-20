@@ -127,6 +127,22 @@ class MyStrategy
   end
 
   def holding
+    if in_far_section?(me) && opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
+      # if too many opponent hockeyists near me on opponent's side
+      teammate = nearest_my_hockeyist_to_unit(me, me)
+      a = me.get_angle_to_unit(teammate)
+      if a.abs < Math::PI/2
+        # if me looks at my teammate
+        if a.abs < enough_pass_angle
+          movee.pass_angle = a
+          movee.pass_power = 1.0
+          movee.action = ActionType::PASS
+        else
+          fast_turn(a)
+        end
+        return
+      end
+    end
     unless strike_position
       self.strike_position = calc_strike_position
     end

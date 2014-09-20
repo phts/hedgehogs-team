@@ -81,4 +81,8 @@ module Constants
     $defending_point_y ||= my_net_center_y
   end
 
+  def enough_pass_angle
+    $enough_pass_angle ||= 0.5 * game.pass_sector
+  end
+
 end
