@@ -98,9 +98,17 @@ module Utils
 
   def go_to_unit(unit)
     movee.speed_up = 1.0
-    movee.turn = me.get_angle_to_unit(unit)
+    fast_turn(me.get_angle_to_unit(unit))
     movee.action = ActionType::TAKE_PUCK
     try_to_knock_down_opponent
+  end
+
+  def fast_turn(angle)
+    if angle.abs < Constants::FAST_TURN_ENOUGH_ANGLE
+      movee.turn = angle
+      return
+    end
+    movee.turn = angle > 0 ? Math::PI : -Math::PI
   end
 
   def debug(message = nil)

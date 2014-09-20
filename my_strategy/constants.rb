@@ -3,6 +3,8 @@ module Constants
   REACH_DISTANCE = 120 # rules (p.13)
   REACH_ANGLES = ((-Math::PI/12)..(Math::PI/12)) # rules (p.13)
 
+  FAST_TURN_ENOUGH_ANGLE = 0.5 * Math::PI / 180
+
   ENOUGH_STRIKE_ANGLE = 0.5 * Math::PI / 180
   STRIKE_POINT_X_FROM_MY_SIDE = 700
   STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE = 150

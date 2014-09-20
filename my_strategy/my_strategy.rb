@@ -196,7 +196,7 @@ class MyStrategy
     nety = opponent_net_center_y
     nety += (in_top_section?(me) ? 0.46 : -0.46) * game.goal_net_height;
     ang_to_net = me.get_angle_to(opponent_net_center_x, nety)
-    movee.turn = ang_to_net
+    fast_turn(ang_to_net)
     if ang_to_net.abs < ENOUGH_STRIKE_ANGLE
       movee.action = ActionType::SWING
     end
@@ -208,7 +208,7 @@ class MyStrategy
 
   def taking_away
     movee.speed_up = 1.0
-    movee.turn = me.get_angle_to_unit(world.puck)
+    fast_turn(me.get_angle_to_unit(world.puck))
     if reachable_unit?(world.puck)
       movee.action = ActionType::STRIKE
     end
