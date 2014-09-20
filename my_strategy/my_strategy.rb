@@ -48,7 +48,13 @@ class MyStrategy
       else
         # if my teammate owns the puck
         if panic_mode?
-          do_state :supporting
+          if in_near_section?(world.puck)
+            # if the puck is on the near half
+            do_state :supporting
+          else
+            # if the puck is on the far half
+            do_state :clearing_the_net
+          end
         else
           if in_near_section?(world.puck)
             # if the puck is on the near half
@@ -112,10 +118,12 @@ class MyStrategy
 
   def supporting
     opp = nearest_opponent_hockeyist_to_unit(world.puck)
-    movee.speed_up = 1.0
-    movee.turn = me.get_angle_to_unit(opp)
-    movee.action = ActionType::TAKE_PUCK
-    try_to_knock_down_opponent
+    go_to_unit(opp)
+  end
+
+  def clearing_the_net
+    opp = nearest_opponent_hockeyist_to(opponent_net_center_x, opponent_net_center_y)
+    go_to_unit(opp)
   end
 
   def holding
@@ -195,10 +203,7 @@ class MyStrategy
   end
 
   def picking_up
-    movee.speed_up = 1.0
-    movee.turn = me.get_angle_to_unit(world.puck)
-    movee.action = ActionType::TAKE_PUCK
-    try_to_knock_down_opponent
+    go_to_unit(world.puck)
   end
 
   def taking_away
