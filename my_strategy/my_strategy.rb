@@ -122,7 +122,7 @@ class MyStrategy
     unless strike_position
       self.strike_position = calc_strike_position
     end
-    go
+    go_to_strike_position
   end
 
   def calc_strike_position
@@ -165,7 +165,7 @@ class MyStrategy
     pos
   end
 
-  def go
+  def go_to_strike_position
     movee.speed_up = 1.0
     if in_strike_position
       turn_to_net
