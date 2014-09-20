@@ -114,7 +114,7 @@ module Utils
 
   def go_to_angle(angle)
     movee.speed_up = 1.0
-    fast_turn(angle_to_defending)
+    fast_turn(angle)
     unless my_hockeyists_own_puck?
       movee.action = ActionType::TAKE_PUCK
     end
