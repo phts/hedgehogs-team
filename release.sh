@@ -13,7 +13,7 @@ filename=hedgehogs-team-$new_version_tag.zip
 
 command -v zip >/dev/null 2>&1
 if [ $? -eq 0 ]; then
-    zip ./tmp/$filename my_strategy.rb utils.rb constants.rb
+    zip -j ./tmp/$filename ./my_strategy/*
 else
     echo "WARNING: 'zip' is not found. Please make '$filename' manually."
 fi

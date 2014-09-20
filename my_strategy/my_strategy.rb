@@ -4,8 +4,8 @@ require './model/move'
 require './model/hockeyist'
 require './model/world'
 require './model/hockeyist_state'
-require './constants'
-require './utils'
+require_relative 'constants'
+require_relative 'utils'
 
 class MyStrategy
   include Constants

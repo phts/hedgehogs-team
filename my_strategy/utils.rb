@@ -1,5 +1,5 @@
 require "./model/hockeyist_type"
-require './constants'
+require_relative 'constants'
 
 module Utils
 

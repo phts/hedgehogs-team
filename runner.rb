@@ -1,4 +1,4 @@
-require './my_strategy'
+require './my_strategy/my_strategy'
 require './remote_process_client'
 
 class Runner
