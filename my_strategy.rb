@@ -41,30 +41,37 @@ class MyStrategy
     end
 
     if world.puck.owner_player_id == me.player_id
+      # if my hockeyists own the puck
       if world.puck.owner_hockeyist_id == me.id
+        # if me owns the puck
         do_state :holding
       else
+        # if my teammate owns the puck
         if panic_mode?
           do_state :supporting
         else
           if in_near_section?(world.puck)
-            # if puck is on the far half
+            # if the puck is on the near half
             do_state :supporting
           else
-            # if puck is on the near half
+            # if the puck is on the far half
             do_state :defending
           end
         end
       end
     else
+      # if nobody or opponent hockeyists own the puck
       if units_equal?(nearest_my_hockeyist_to_unit(world.puck), me)
+        # if me is closer to the puck than my teammates
         if world.puck.owner_hockeyist_id == -1
           # if nobody owns the puck
           do_state :picking_up
         else
+          # if opponent hockeyists own the puck
           do_state :taking_away
         end
       else
+        # if my teammates are closer to the puck than me
         if panic_mode?
           do_state :supporting
         else
