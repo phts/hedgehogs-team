@@ -234,9 +234,7 @@ class MyStrategy
   def defending
     angle_to_defending = me.get_angle_to(defending_point_x, defending_point_y)
 
-    movee.action = ActionType::TAKE_PUCK
-    movee.turn = angle_to_defending
-    movee.speed_up = 1.0
+    go_to_angle(angle_to_defending)
 
     distance = me.get_distance_to(defending_point_x, defending_point_y)
     if distance < 30

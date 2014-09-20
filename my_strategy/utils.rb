@@ -108,11 +108,15 @@ module Utils
     !!$panic_mode
   end
 
-  def go_to_unit(unit)
+  def go_to_angle(angle)
     movee.speed_up = 1.0
-    fast_turn(me.get_angle_to_unit(unit))
+    fast_turn(angle_to_defending)
     movee.action = ActionType::TAKE_PUCK
     try_to_knock_down_opponent
+  end
+
+  def go_to_unit(unit)
+    go_to_angle(me.get_angle_to_unit(unit))
   end
 
   def fast_turn(angle)
