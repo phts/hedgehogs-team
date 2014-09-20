@@ -114,10 +114,8 @@ class MyStrategy
     opp = nearest_opponent_hockeyist_to_unit(world.puck)
     movee.speed_up = 1.0
     movee.turn = me.get_angle_to_unit(opp)
-    movee.action = ActionType::NONE
-    if reachable_unit?(opp)
-      movee.action = ActionType::SWING
-    end
+    movee.action = ActionType::TAKE_PUCK
+    try_to_knock_down_opponent
   end
 
   def holding
