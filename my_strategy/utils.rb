@@ -158,6 +158,16 @@ module Utils
     future_delta_y = Math.sin(speed_angle) * future_distance
     future_x = unit.x + future_delta_x
     future_y = unit.y + future_delta_y
+    if future_x < game.rink_left
+      future_x = game.rink_left + (game.rink_left - future_x)
+    elsif future_x > game.rink_right
+      future_x = game.rink_right - (future_x - game.rink_right)
+    end
+    if future_y < game.rink_top
+      future_y = game.rink_top + (game.rink_top - future_y)
+    elsif future_y > game.rink_bottom
+      future_y = game.rink_bottom - (future_y - game.rink_bottom)
+    end
     [future_x, future_y]
   end
 
