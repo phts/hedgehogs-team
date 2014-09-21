@@ -88,10 +88,6 @@ module Utils
     u1.id == u2.id
   end
 
-  def overtime?
-    world.tick >= world.tick_count
-  end
-
   def losing_more_than_by?(points)
     opponent_player.goal_count - my_player.goal_count >= points
   end
