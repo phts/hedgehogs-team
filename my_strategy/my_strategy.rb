@@ -117,7 +117,7 @@ class MyStrategy
 
   def supporting
     opp = nearest_opponent_hockeyist_to_unit(world.puck)
-    go_to_unit(opp)
+    go_to_moving_unit(opp)
   end
 
   def clearing_the_net
@@ -218,16 +218,14 @@ class MyStrategy
   end
 
   def picking_up
-    go_to_unit(world.puck)
+    go_to_moving_unit(world.puck)
   end
 
   def taking_away
-    movee.speed_up = 1.0
-    fast_turn(me.get_angle_to_unit(world.puck))
+    go_to_moving_unit(world.puck)
     if reachable_unit?(world.puck)
       movee.action = ActionType::STRIKE
     end
-    try_to_knock_down_opponent
   end
 
   def defending

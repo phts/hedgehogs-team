@@ -125,6 +125,45 @@ module Utils
     go_to_angle(me.get_angle_to_unit(unit))
   end
 
+  def go_to_moving_unit(unit)
+    go_to_unit(unit)
+    if unit_moves_in_opposite_direction?(me, unit)
+      # if unit moves in an opposite direction to me
+      unless unit_speed(me) < 5
+        # if me moves fast
+        # then stop and turn
+        movee.speed_up = -1.0
+      end
+    end
+  end
+
+  def speed_vector_angle(unit)
+    Math.atan2(unit.speed_y, unit.speed_x)
+  end
+
+  # Calculates difference between angles a1 and a2.
+  # @return Sighed value.
+  #         Positive value corresponds clockwise direction from a1 to a2.
+  def angles_diff(a1, a2)
+    diff = a2 - a1
+    while diff > Math::PI
+      diff -= 2.0 * Math::PI
+    end
+    while diff < -Math::PI
+      diff += 2.0 * Math::PI
+    end
+    diff
+  end
+
+  def speed_vector_angles_diff(unit1, unit2)
+    angles_diff(speed_vector_angle(unit1), speed_vector_angle(unit2))
+  end
+
+  def unit_moves_in_opposite_direction?(unit, target)
+    diff = speed_vector_angles_diff(unit, target)
+    diff.abs > Math::PI/2
+  end
+
   def fast_turn(angle)
     if angle.abs < Constants::FAST_TURN_ENOUGH_ANGLE
       movee.turn = angle
