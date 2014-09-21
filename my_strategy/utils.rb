@@ -129,12 +129,36 @@ module Utils
     go_to_unit(unit)
     if unit_moves_in_opposite_direction?(me, unit)
       # if unit moves in an opposite direction to me
-      unless unit_speed(me) < 5
-        # if me moves fast
-        # then stop and turn
-        movee.speed_up = -1.0
+      angle_to_unit = if me.get_distance_to_unit(unit) > 100
+                        # if unit is too far
+                        # then calc angle to its future position to be able to take it fast
+                        future_pos = future_position(unit)
+                        me.get_angle_to(future_pos[0], future_pos[1])
+                      else
+                        me.get_angle_to_unit(unit)
+                      end
+      if angle_to_unit.abs < Math::PI/2
+        # move to each other
+        movee.turn = angle_to_unit
+      else
+        # move from each other
+        unless unit_speed(me) < 5
+          # if me moves fast
+          # then stop and turn
+          movee.speed_up = -1.0
+        end
       end
     end
+  end
+
+  def future_position(unit)
+    future_distance = unit_speed(unit) * 20 # distance in 20 ticks
+    speed_angle = speed_vector_angle(unit)
+    future_delta_x = Math.cos(speed_angle) * future_distance
+    future_delta_y = Math.sin(speed_angle) * future_distance
+    future_x = unit.x + future_delta_x
+    future_y = unit.y + future_delta_y
+    [future_x, future_y]
   end
 
   def speed_vector_angle(unit)
