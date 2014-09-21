@@ -245,7 +245,7 @@ class MyStrategy
         else
           movee.speed_up = -1.0
         end
-        if me.speed_x.abs < 1 && me.speed_y.abs < 1
+        if unit_speed(me) < 1
           movee.speed_up = 0
         end
       end

@@ -108,6 +108,10 @@ module Utils
     !!$panic_mode
   end
 
+  def unit_speed(unit)
+    Math::sqrt(unit.speed_x**2 + unit.speed_y**2)
+  end
+
   def go_to_angle(angle)
     movee.speed_up = 1.0
     fast_turn(angle)
