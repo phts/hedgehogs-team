@@ -1,10 +1,8 @@
 require_relative "../my_strategy/utils"
 
 describe Utils do
-  include Utils
-
   describe '#angles_diff' do
-    subject { angles_diff(a1, a2) }
+    subject { described_class.angles_diff(a1, a2) }
     let(:first_quarter) { -Math::PI/4 }
     let(:second_quarter) { -3*Math::PI/4 }
     let(:third_quarter) { 3*Math::PI/4 }
