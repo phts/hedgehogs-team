@@ -80,10 +80,6 @@ class Environment
     nil
   end
 
-  def losing_more_than_by?(points)
-    opponent_player.goal_count - my_player.goal_count >= points
-  end
-
   def losing?
     my_player.goal_count < opponent_player.goal_count
   end

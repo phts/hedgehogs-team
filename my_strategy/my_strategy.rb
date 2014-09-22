@@ -31,8 +31,8 @@ class MyStrategy
       return
     end
 
-    if env.losing_more_than_by?(2) || (env.losing? && env.game_ends_in_less_than?(1000))
-      # if I'm losing with big score or when losing and game is almost ended
+    if env.losing? && env.game_ends_in_less_than?(1000)
+      # when losing and game is almost ended
       # then turn on "Panic Mode"
       $panic_mode = true
     end
