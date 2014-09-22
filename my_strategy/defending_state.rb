@@ -39,7 +39,7 @@ module State
         if env.reachable_unit?(world.puck)
           move.action = ActionType::STRIKE
         end
-      elsif distance < 150
+      elsif distance < 200
         if angle_to_defending.abs < Math::PI/2
           # if me looks at defending point
           move.turn = angle_to_defending
