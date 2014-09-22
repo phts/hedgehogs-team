@@ -81,7 +81,18 @@ class MyStrategy
         if env.panic_mode?
           do_state :supporting
         else
-          do_state :defending
+          if world.puck.owner_hockeyist_id == -1
+            # nobody
+            do_state :defending
+          else
+            # opponent
+            h = env.hockeyist_by_id(world.puck.owner_hockeyist_id)
+            if Utils.in_near_section?(h)
+              do_state :taking_away
+            else
+              do_state :defending
+            end
+          end
         end
       end
     end

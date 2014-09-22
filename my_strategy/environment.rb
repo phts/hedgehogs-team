@@ -69,6 +69,10 @@ class Environment
     arr
   end
 
+  def hockeyist_by_id(id)
+    world.hockeyists.select{ |h| h.id == id }.first
+  end
+
   def reachable_unit?(unit)
     me.get_distance_to_unit(unit) <= Constants::REACH_DISTANCE && Constants::REACH_ANGLES.include?(me.get_angle_to_unit(unit))
   end
