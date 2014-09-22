@@ -17,7 +17,7 @@ module State
     end
 
     def perform
-      if Utils.in_far_section?(me) && env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
+      if Utils.on_opponent_half?(me) && env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
         # if too many opponent hockeyists near me on opponent's side
         teammate = env.nearest_my_hockeyist_to_unit(me, me)
         a = me.get_angle_to_unit(teammate)
@@ -54,7 +54,7 @@ module State
       if me.get_distance_to(Defending.defending_point_x, Defending.defending_point_y) < 100
         # if took the puck probably while defencing
         # then go to the opposide side where the opponent was from
-        if Utils.in_top_section?(env.nearest_opponent_hockeyist_to_unit(me))
+        if Utils.on_top_half?(env.nearest_opponent_hockeyist_to_unit(me))
           # if nearest opponent in the top section then move down
           pos << [bottom_middle_point_x, bottom_middle_point_y]
           pos << [bottom_strike_point_x, bottom_strike_point_y]
@@ -110,7 +110,7 @@ module State
     def turn_to_net
       self.in_strike_position = true
       nety = Constants.opponent_net_center_y
-      nety += (Utils.in_top_section?(me) ? 0.46 : -0.46) * game.goal_net_height;
+      nety += (Utils.on_top_half?(me) ? 0.46 : -0.46) * game.goal_net_height;
       ang_to_net = me.get_angle_to(Constants.opponent_net_center_x, nety)
       env.fast_turn(ang_to_net)
       if ang_to_net.abs < ENOUGH_STRIKE_ANGLE

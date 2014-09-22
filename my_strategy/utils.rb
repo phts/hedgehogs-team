@@ -15,24 +15,24 @@ module Utils
       Constants.opponent_on_the_left? ? right_than?(x, unit) : left_than?(x, unit)
     end
 
-    def in_top_section?(unit)
+    def on_top_half?(unit)
       unit.y <= Constants.rink_center_y
     end
 
-    def in_right_section?(unit)
+    def on_right_half?(unit)
       right_than?(Constants.rink_center_x, unit)
     end
 
-    def in_left_section?(unit)
+    def on_left_half?(unit)
       left_than?(Constants.rink_center_x, unit)
     end
 
-    def in_near_section?(unit)
-      Constants.opponent_on_the_left? ? in_right_section?(unit) : in_left_section?(unit)
+    def on_my_half?(unit)
+      Constants.opponent_on_the_left? ? on_right_half?(unit) : on_left_half?(unit)
     end
 
-    def in_far_section?(unit)
-      Constants.opponent_on_the_left? ? in_left_section?(unit) : in_right_section?(unit)
+    def on_opponent_half?(unit)
+      Constants.opponent_on_the_left? ? on_left_half?(unit) : on_right_half?(unit)
     end
 
     def x_from_my_vertical_side(value)

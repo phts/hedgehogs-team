@@ -48,19 +48,19 @@ class MyStrategy
       else
         # if my teammate owns the puck
         if env.panic_mode?
-          if Utils.in_near_section?(world.puck)
-            # if the puck is on the near half
+          if Utils.on_my_half?(world.puck)
+            # if the puck is on my half
             do_state :supporting
           else
-            # if the puck is on the far half
+            # if the puck is on opponent's half
             do_state :clearing_the_net
           end
         else
-          if Utils.in_near_section?(world.puck)
-            # if the puck is on the near half
+          if Utils.on_my_half?(world.puck)
+            # if the puck is on my half
             do_state :supporting
           else
-            # if the puck is on the far half
+            # if the puck is on opponent's half
             do_state :defending
           end
         end
