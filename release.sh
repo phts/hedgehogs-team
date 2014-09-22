@@ -3,8 +3,7 @@
 set -x
 
 prev_version_tag=`git describe --tags --abbrev=0`
-prev_version=`echo $prev_version_tag | cut -d'.' -f 1` # cut off minor version
-prev_version=`echo $prev_version | cut -c 2-10`
+prev_version=`echo $prev_version_tag | sed 's|[^0-9]||g'`
 new_version=$(($prev_version+1))
 new_version_tag="v$new_version"
 
