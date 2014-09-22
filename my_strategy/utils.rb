@@ -3,16 +3,28 @@ require_relative 'constants'
 module Utils
   class << self
 
+    def right_than?(x, unit)
+      unit.x >= x
+    end
+
+    def left_than?(x, unit)
+      unit.x <= x
+    end
+
+    def nearer_than?(x, unit)
+      Constants.opponent_on_the_left? ? right_than?(x, unit) : left_than?(x, unit)
+    end
+
     def in_top_section?(unit)
       unit.y <= Constants.rink_center_y
     end
 
     def in_right_section?(unit)
-      unit.x >= Constants.rink_center_x
+      right_than?(Constants.rink_center_x, unit)
     end
 
     def in_left_section?(unit)
-      unit.x <= Constants.rink_center_x
+      left_than?(Constants.rink_center_x, unit)
     end
 
     def in_near_section?(unit)

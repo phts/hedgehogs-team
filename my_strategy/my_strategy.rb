@@ -87,7 +87,8 @@ class MyStrategy
           else
             # opponent
             h = env.hockeyist_by_id(world.puck.owner_hockeyist_id)
-            if Utils.in_near_section?(h)
+            if env.my_defenders_in_front_of_attacking_opponent(h).count <= 1
+              # if only one my hockeyist is in front of attacking opponent
               do_state :taking_away
             else
               do_state :defending

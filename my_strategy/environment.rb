@@ -184,4 +184,9 @@ class Environment
     end
   end
 
+  def my_defenders_in_front_of_attacking_opponent(attacking)
+    my_hockeyists = player_hockeyists(my_player.id)
+    my_hockeyists.select{ |h| Utils.nearer_than?(attacking.x, h) }
+  end
+
 end
