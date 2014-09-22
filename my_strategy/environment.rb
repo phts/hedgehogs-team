@@ -104,6 +104,13 @@ class Environment
   def go_to_angle(angle)
     move.speed_up = 1.0
     fast_turn(angle)
+    unless angle.abs < Math::PI/2
+      # if moves from unit
+      unless Utils.unit_speed(me) < 5
+        # if me moves fast then stop and turn
+        move.speed_up = -1.0
+      end
+    end
     unless my_hockeyists_own_puck?
       move.action = ActionType::TAKE_PUCK
     end
@@ -115,7 +122,6 @@ class Environment
   end
 
   def go_to_moving_unit(unit)
-    go_to_unit(unit)
     if Utils.unit_moves_in_opposite_direction?(me, unit)
       # if unit moves in an opposite direction to me
       angle_to_unit = if me.get_distance_to_unit(unit) > 100
@@ -126,18 +132,10 @@ class Environment
                       else
                         me.get_angle_to_unit(unit)
                       end
-      if angle_to_unit.abs < Math::PI/2
-        # move to each other
-        move.turn = angle_to_unit
-      else
-        # move from each other
-        unless Utils.unit_speed(me) < 5
-          # if me moves fast
-          # then stop and turn
-          move.speed_up = -1.0
-        end
-      end
+    else
+      angle_to_unit = me.get_angle_to_unit(unit)
     end
+    go_to_angle(angle_to_unit)
   end
 
   def future_position(unit)
