@@ -51,7 +51,7 @@ module State
 
     def calc_strike_position
       pos = []
-      if me.get_distance_to(Defending.defending_point_x, Defending.defending_point_y) < 100
+      if me_in_position?(Defending.defending_point_x, Defending.defending_point_y)
         # if took the puck probably while defencing
         # then go to the opposide side where the opponent was from
         if Utils.on_top_half?(env.nearest_opponent_hockeyist_to_unit(me))
@@ -99,7 +99,7 @@ module State
       x = point[0]
       y = point[1]
       move.turn = me.get_angle_to(x, y)
-      if me.get_distance_to(x, y) < 100
+      if me_in_position?(x, y)
         strike_position.shift
         if strike_position.empty?
           turn_to_net
@@ -116,6 +116,10 @@ module State
       if ang_to_net.abs < ENOUGH_STRIKE_ANGLE
         move.action = ActionType::SWING
       end
+    end
+
+    def me_in_position?(x, y)
+      me.get_distance_to(x, y) < 100
     end
 
     def top_strike_point_x
