@@ -120,7 +120,7 @@ class Environment
       angle_to_unit = if me.get_distance_to_unit(unit) > 200
                         # if unit is too far
                         # then calc angle to its future position to be able to take it fast
-                        future_pos = future_position(unit, 20)
+                        future_pos = future_position(unit, 10*Utils.unit_speed(unit))
                         me.get_angle_to(future_pos[0], future_pos[1])
                       else
                         me.get_angle_to_unit(unit)
