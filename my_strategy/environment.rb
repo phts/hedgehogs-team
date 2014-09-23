@@ -103,14 +103,7 @@ class Environment
 
   def go_to_angle(angle)
     move.speed_up = 1.0
-    fast_turn(angle)
-    unless angle.abs < Math::PI/2
-      # if moves from unit
-      unless Utils.unit_speed(me) < 2
-        # if me moves fast then stop and turn
-        move.speed_up = -1.0
-      end
-    end
+    smart_turn(angle)
     unless my_hockeyists_own_puck?
       move.action = ActionType::TAKE_PUCK
     end
@@ -164,6 +157,17 @@ class Environment
       return
     end
     move.turn = angle > 0 ? Math::PI : -Math::PI
+  end
+
+  def smart_turn(angle)
+    fast_turn(angle)
+    unless angle.abs < Math::PI/2
+      # if moves from unit
+      unless Utils.unit_speed(me) < 2
+        # if me moves fast then stop and turn
+        move.speed_up = -1.0
+      end
+    end
   end
 
   def try_to_knock_down_opponent(always = false)
