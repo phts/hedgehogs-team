@@ -120,7 +120,7 @@ class Environment
       angle_to_unit = if me.get_distance_to_unit(unit) > 200
                         # if unit is too far
                         # then calc angle to its future position to be able to take it fast
-                        future_pos = future_position(unit)
+                        future_pos = future_position(unit, 20)
                         me.get_angle_to(future_pos[0], future_pos[1])
                       else
                         me.get_angle_to_unit(unit)
@@ -131,8 +131,8 @@ class Environment
     go_to_angle(angle_to_unit)
   end
 
-  def future_position(unit)
-    future_distance = Utils.unit_speed(unit) * 20 # distance in 20 ticks
+  def future_position(unit, ticks)
+    future_distance = Utils.unit_speed(unit) * ticks
     speed_angle = Utils.speed_vector_angle(unit)
     future_delta_x = Math.cos(speed_angle) * future_distance
     future_delta_y = Math.sin(speed_angle) * future_distance
