@@ -117,7 +117,7 @@ class Environment
   def go_to_moving_unit(unit)
     if Utils.unit_moves_in_opposite_direction?(me, unit)
       # if unit moves in an opposite direction to me
-      angle_to_unit = if me.get_distance_to_unit(unit) > 100
+      angle_to_unit = if me.get_distance_to_unit(unit) > 200
                         # if unit is too far
                         # then calc angle to its future position to be able to take it fast
                         future_pos = future_position(unit)
