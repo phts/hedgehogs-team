@@ -106,7 +106,7 @@ class Environment
     fast_turn(angle)
     unless angle.abs < Math::PI/2
       # if moves from unit
-      unless Utils.unit_speed(me) < 5
+      unless Utils.unit_speed(me) < 2
         # if me moves fast then stop and turn
         move.speed_up = -1.0
       end
