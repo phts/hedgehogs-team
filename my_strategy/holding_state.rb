@@ -67,10 +67,10 @@ module State
       end
       if me_in_position?(top_strike_point_x, top_strike_point_y)
         pos << [top_strike_point_x, top_strike_point_y]
-        return
+        return pos
       elsif me_in_position?(bottom_strike_point_x, bottom_strike_point_y)
         pos << [bottom_strike_point_x, bottom_strike_point_y]
-        return
+        return pos
       end
       angle_to_top_strike_point = me.get_angle_to(top_strike_point_x, top_strike_point_y)
       angle_to_bottom_strike_point = me.get_angle_to(bottom_strike_point_x, bottom_strike_point_y)
