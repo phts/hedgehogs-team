@@ -2,7 +2,6 @@ require './model/action_type'
 require_relative "base_state"
 require_relative "constants"
 require_relative "utils"
-require_relative "defending_state"
 
 module State
   class Holding < Base
