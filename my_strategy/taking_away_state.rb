@@ -15,7 +15,9 @@ module State
           # if me is closer to the puck than my teammates
           unless env.world.puck.owner_hockeyist_id == -1
             # if opponent hockeyists own the puck
-            return true
+            if Utils.on_my_half?(env.world.puck)
+              return true
+            end
           end
         else
           # if my teammates are closer to the puck than me

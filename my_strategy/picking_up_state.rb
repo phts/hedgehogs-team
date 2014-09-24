@@ -15,6 +15,11 @@ module State
           if env.world.puck.owner_hockeyist_id == -1
             # if nobody owns the puck
             return true
+          else
+            # if opponent hockeyists own the puck
+            if Utils.on_opponent_half?(env.world.puck)
+              return true
+            end
           end
         end
       end
