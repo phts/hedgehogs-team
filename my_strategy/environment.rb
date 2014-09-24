@@ -122,7 +122,7 @@ class Environment
       angle_to_unit = if me.get_distance_to_unit(unit) > 200
                         # if unit is too far
                         # then calc angle to its future position to be able to take it fast
-                        future_pos = future_position(unit, 10*Utils.unit_speed(unit))
+                        future_pos = Utils.future_position(unit, 10*Utils.unit_speed(unit))
                         me.get_angle_to(future_pos[0], future_pos[1])
                       else
                         me.get_angle_to_unit(unit)
@@ -131,26 +131,6 @@ class Environment
       angle_to_unit = me.get_angle_to_unit(unit)
     end
     go_to_angle(angle_to_unit)
-  end
-
-  def future_position(unit, ticks)
-    future_distance = Utils.unit_speed(unit) * ticks
-    speed_angle = Utils.speed_vector_angle(unit)
-    future_delta_x = Math.cos(speed_angle) * future_distance
-    future_delta_y = Math.sin(speed_angle) * future_distance
-    future_x = unit.x + future_delta_x
-    future_y = unit.y + future_delta_y
-    if future_x < Constants.game.rink_left
-      future_x = Constants.game.rink_left + (Constants.game.rink_left - future_x)
-    elsif future_x > Constants.game.rink_right
-      future_x = Constants.game.rink_right - (future_x - Constants.game.rink_right)
-    end
-    if future_y < Constants.game.rink_top
-      future_y = Constants.game.rink_top + (Constants.game.rink_top - future_y)
-    elsif future_y > Constants.game.rink_bottom
-      future_y = Constants.game.rink_bottom - (future_y - Constants.game.rink_bottom)
-    end
-    [future_x, future_y]
   end
 
   def fast_turn(angle)

@@ -80,5 +80,25 @@ module Utils
       diff.abs > Math::PI/2
     end
 
+    def future_position(unit, ticks)
+      future_distance = unit_speed(unit) * ticks
+      speed_angle = speed_vector_angle(unit)
+      future_delta_x = Math.cos(speed_angle) * future_distance
+      future_delta_y = Math.sin(speed_angle) * future_distance
+      future_x = unit.x + future_delta_x
+      future_y = unit.y + future_delta_y
+      if future_x < Constants.game.rink_left
+        future_x = Constants.game.rink_left + (Constants.game.rink_left - future_x)
+      elsif future_x > Constants.game.rink_right
+        future_x = Constants.game.rink_right - (future_x - Constants.game.rink_right)
+      end
+      if future_y < Constants.game.rink_top
+        future_y = Constants.game.rink_top + (Constants.game.rink_top - future_y)
+      elsif future_y > Constants.game.rink_bottom
+        future_y = Constants.game.rink_bottom - (future_y - Constants.game.rink_bottom)
+      end
+      [future_x, future_y]
+    end
+
   end
 end
