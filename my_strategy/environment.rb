@@ -85,6 +85,10 @@ class Environment
     nil
   end
 
+  def overtime?
+    world.tick >= world.tick_count
+  end
+
   def losing?
     my_player.goal_count < opponent_player.goal_count
   end

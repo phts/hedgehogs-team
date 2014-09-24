@@ -56,6 +56,12 @@ module State
 
     def calc_strike_position
       pos = []
+      if env.overtime? && env.my_player.goal_count == 0
+        # if overtime and 0:0 then goalkeepers are gone
+        # so strike from any position
+        pos << [me.x, me.y]
+        return pos
+      end
       if me_in_position?(Defending.defending_point_x, Defending.defending_point_y)
         # if took the puck probably while defencing
         # then go to the opposide side where the opponent was from
