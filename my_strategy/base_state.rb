@@ -14,6 +14,10 @@ module State
       perform
     end
 
+    def should_perform?(env)
+      raise "Should be overriden"
+    end
+
     def reset; end
 
     protected

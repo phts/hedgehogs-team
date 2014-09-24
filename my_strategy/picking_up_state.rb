@@ -7,6 +7,20 @@ module State
       :picking_up
     end
 
+    def should_perform?(env)
+      unless env.my_hockeyists_own_puck?
+        # if nobody or opponent hockeyists own the puck
+        if Utils.units_equal?(env.nearest_my_hockeyist_to_unit(env.world.puck), env.me)
+          # if me is closer to the puck than my teammates
+          if env.world.puck.owner_hockeyist_id == -1
+            # if nobody owns the puck
+            return true
+          end
+        end
+      end
+      false
+    end
+
     def perform
       env.go_to_moving_unit(world.puck)
     end

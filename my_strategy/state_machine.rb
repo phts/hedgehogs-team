@@ -16,17 +16,27 @@ class StateMachine
     end
   end
 
-  def perform(new_state, env)
-    unless new_state == state
-      state_to_object[state].reset if state
-      @state = new_state
+  def perform(env)
+    state_to_object.each do |name, st|
+      if st.should_perform?(env)
+        perform_state(name, env)
+        return
+      end
     end
-    state_to_object[new_state].perform_state(env)
+    puts "WARNING: no states performed: #{env.inspect}"
   end
 
   private
 
   attr_reader :state
   attr_reader :state_to_object
+
+  def perform_state(new_state, env)
+    unless new_state == state
+      state_to_object[state].reset if state
+      @state = new_state
+    end
+    state_to_object[new_state].perform_state(env)
+  end
 
 end

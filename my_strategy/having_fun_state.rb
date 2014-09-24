@@ -8,6 +8,10 @@ module State
       :having_fun
     end
 
+    def should_perform?(env)
+      env.my_player.just_scored_goal || env.my_player.just_missed_goal
+    end
+
     def perform
       move.speed_up = 1.0
       if env.my_player.just_scored_goal

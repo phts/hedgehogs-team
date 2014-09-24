@@ -16,6 +16,11 @@ module State
       :holding
     end
 
+    def should_perform?(env)
+      # if me owns the puck
+      env.world.puck.owner_hockeyist_id == env.me.id
+    end
+
     def perform
       if Utils.on_opponent_half?(me) && env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
         # if too many opponent hockeyists near me on opponent's side
