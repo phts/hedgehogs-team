@@ -9,15 +9,13 @@ class Environment
 
   attr_reader :me
   attr_reader :world
-  attr_reader :game
   attr_reader :move
   attr_reader :my_player
   attr_reader :opponent_player
 
-  def update(me, world, game, move)
+  def update(me, world, move)
     @me = me
     @world = world
-    @game = game
     @move = move
     @my_player = world.get_my_player
     @opponent_player = world.get_opponent_player
@@ -142,15 +140,15 @@ class Environment
     future_delta_y = Math.sin(speed_angle) * future_distance
     future_x = unit.x + future_delta_x
     future_y = unit.y + future_delta_y
-    if future_x < game.rink_left
-      future_x = game.rink_left + (game.rink_left - future_x)
-    elsif future_x > game.rink_right
-      future_x = game.rink_right - (future_x - game.rink_right)
+    if future_x < Constants.game.rink_left
+      future_x = Constants.game.rink_left + (Constants.game.rink_left - future_x)
+    elsif future_x > Constants.game.rink_right
+      future_x = Constants.game.rink_right - (future_x - Constants.game.rink_right)
     end
-    if future_y < game.rink_top
-      future_y = game.rink_top + (game.rink_top - future_y)
-    elsif future_y > game.rink_bottom
-      future_y = game.rink_bottom - (future_y - game.rink_bottom)
+    if future_y < Constants.game.rink_top
+      future_y = Constants.game.rink_top + (Constants.game.rink_top - future_y)
+    elsif future_y > Constants.game.rink_bottom
+      future_y = Constants.game.rink_bottom - (future_y - Constants.game.rink_bottom)
     end
     [future_x, future_y]
   end

@@ -127,7 +127,7 @@ module State
     def turn_to_net
       self.in_strike_position = true
       nety = Constants.opponent_net_center_y
-      nety += (Utils.on_top_half?(me) ? 0.46 : -0.46) * game.goal_net_height;
+      nety += (Utils.on_top_half?(me) ? 0.46 : -0.46) * Constants.game.goal_net_height;
       ang_to_net = me.get_angle_to(Constants.opponent_net_center_x, nety)
       env.fast_turn(ang_to_net)
       if ang_to_net.abs < ENOUGH_STRIKE_ANGLE
@@ -144,13 +144,13 @@ module State
     end
 
     def top_strike_point_y
-      $top_strike_point_y ||= game.rink_top + STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
+      $top_strike_point_y ||= Constants.game.rink_top + STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
     end
 
     alias_method :bottom_strike_point_x, :top_strike_point_x
 
     def bottom_strike_point_y
-      $bottom_strike_point_y ||= game.rink_bottom - STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
+      $bottom_strike_point_y ||= Constants.game.rink_bottom - STRIKE_POINT_Y_FROM_HORIZONTAL_SIDE
     end
 
     def top_middle_point_x

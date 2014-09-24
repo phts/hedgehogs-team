@@ -9,7 +9,6 @@ module State
       @env = env
       @me = @env.me
       @world = @env.world
-      @game = @env.game
       @move = @env.move
       perform
     end
@@ -27,7 +26,6 @@ module State
     attr_reader :env
     attr_reader :me
     attr_reader :world
-    attr_reader :game
     attr_reader :move
 
   end
