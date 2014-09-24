@@ -8,6 +8,8 @@ require_relative "taking_away_state"
 
 class StateMachine
 
+  DEFAULT_STATE = :picking_up
+
   def initialize
     @state_to_object = {}
     classes = State.constants.select{ |c| c != :Base && State.const_get(c).is_a?(Class) }.map { |c| State.const_get(c) }
@@ -24,6 +26,7 @@ class StateMachine
       end
     end
     puts "WARNING: no states performed: #{env.inspect}"
+    perform_state(DEFAULT_STATE, env)
   end
 
   private
