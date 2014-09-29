@@ -17,6 +17,7 @@ class Constants
       $my_net_center_x = opponent_on_the_left? ? env.my_player.net_left : env.my_player.net_right
       $my_net_center_y = 0.5 * (env.my_player.net_top + env.my_player.net_bottom)
       $enough_pass_angle = 0.5 * game.pass_sector
+      $three_by_three = env.world.hockeyists.size >= 8
     end
 
     def game
@@ -53,6 +54,10 @@ class Constants
 
     def enough_pass_angle
       $enough_pass_angle
+    end
+
+    def three_by_three?
+      $three_by_three
     end
 
   end
