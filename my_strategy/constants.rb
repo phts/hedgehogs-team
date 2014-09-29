@@ -7,6 +7,7 @@ class Constants
 
     def init(game, env)
       return if $constants_initialized
+      $constants_initialized = true
       $game = game
       $rink_center_x = (game.rink_right+game.rink_left) * 0.5
       $rink_center_y = (game.rink_bottom+game.rink_top) * 0.5
@@ -16,7 +17,6 @@ class Constants
       $my_net_center_x = opponent_on_the_left? ? env.my_player.net_left : env.my_player.net_right
       $my_net_center_y = 0.5 * (env.my_player.net_top + env.my_player.net_bottom)
       $enough_pass_angle = 0.5 * game.pass_sector
-      $constants_initialized = true
     end
 
     def game
