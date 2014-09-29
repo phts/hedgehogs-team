@@ -3,6 +3,38 @@ class Constants
   REACH_DISTANCE = 120 # rules (p.13)
   REACH_ANGLES = ((-Math::PI/12)..(Math::PI/12)) # rules (p.13)
 
+  METHODS = [
+              :game,
+              :rink_center_x,
+              :rink_center_y,
+              :opponent_net_center_x,
+              :opponent_net_center_y,
+              :my_net_center_x,
+              :my_net_center_y,
+              :enough_pass_angle,
+            ]
+
+  BOOLEAN_METHODS = [
+                      :opponent_on_the_left,
+                      :three_by_three,
+                    ]
+
+  METHODS.each do |m|
+    instance_eval %Q{
+      def #{m}
+        $#{m}
+      end
+    }
+  end
+
+  BOOLEAN_METHODS.each do |m|
+    instance_eval %Q{
+      def #{m}?
+        $#{m}
+      end
+    }
+  end
+
   class << self
 
     def init(game, env)
@@ -18,46 +50,6 @@ class Constants
       $my_net_center_y = 0.5 * (env.my_player.net_top + env.my_player.net_bottom)
       $enough_pass_angle = 0.5 * game.pass_sector
       $three_by_three = env.world.hockeyists.size >= 8
-    end
-
-    def game
-      $game
-    end
-
-    def opponent_on_the_left?
-      $opponent_on_the_left
-    end
-
-    def opponent_net_center_x
-      $opponent_net_center_x
-    end
-
-    def opponent_net_center_y
-      $opponent_net_center_y
-    end
-
-    def my_net_center_x
-      $my_net_center_x
-    end
-
-    def my_net_center_y
-      $my_net_center_y
-    end
-
-    def rink_center_x
-      $rink_center_x
-    end
-
-    def rink_center_y
-      $rink_center_y
-    end
-
-    def enough_pass_angle
-      $enough_pass_angle
-    end
-
-    def three_by_three?
-      $three_by_three
     end
 
   end
