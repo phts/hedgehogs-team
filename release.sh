@@ -25,8 +25,8 @@ if ! rspec -c; then
     exit 1
 fi
 
-prev_version_tag=`git describe --tags --abbrev=0`
-prev_version=`echo $prev_version_tag | sed 's|[^0-9]||g'`
+prev_version_tag=`git describe --tags --abbrev=0 --match "v[0-9]*"` # filter only major version tags
+prev_version=`echo $prev_version_tag | cut -c 2-10` # cut off "v" symbol
 new_version=$(($prev_version+1))
 new_version_tag="v$new_version"
 
