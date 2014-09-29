@@ -1,4 +1,6 @@
 require_relative "base_state"
+require_relative "constants"
+require_relative "utils"
 
 module State
   class Supporting < Base
@@ -15,12 +17,18 @@ module State
           if Utils.on_my_half?(env.world.puck)
             return true
           end
+          if Constants.three_by_three? && Utils.units_equal?(env.me, env.nearest_my_hockeyists_to_unit(env.world.puck)[1])
+            return true
+          end
         end
       else
         # if nobody or opponent hockeyists own the puck
         unless Utils.units_equal?(env.nearest_my_hockeyist_to_unit(env.world.puck), env.me)
-          # if my teammates are closer to the puck than me
+          # if my teammate is closer to the puck than me
           if env.panic_mode?
+            return true
+          end
+          if Constants.three_by_three? && Utils.units_equal?(env.me, env.nearest_my_hockeyists_to_unit(env.world.puck)[1])
             return true
           end
         end

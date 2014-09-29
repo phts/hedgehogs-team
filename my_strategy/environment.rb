@@ -67,6 +67,12 @@ class Environment
     arr
   end
 
+  # Returns a sorted array of nearest my hockeyists to unit.
+  # First item - nearest hockeyist, last item - farthest hockeyist.
+  def nearest_my_hockeyists_to_unit(unit)
+    player_hockeyists(my_player.id).sort{ |h1, h2| h1.get_distance_to_unit(unit) <=> h2.get_distance_to_unit(unit) }
+  end
+
   def hockeyist_by_id(id)
     world.hockeyists.select{ |h| h.id == id }.first
   end

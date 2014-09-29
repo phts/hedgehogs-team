@@ -23,19 +23,23 @@ module State
         unless env.world.puck.owner_hockeyist_id == env.me.id
           # if my teammate owns the puck
           unless env.panic_mode?
-            if Utils.on_opponent_half?(env.world.puck)
-              return true
+            if Utils.units_equal?(env.me, env.nearest_my_hockeyists_to_unit(env.world.puck).last)
+              if Utils.on_opponent_half?(env.world.puck)
+                return true
+              end
             end
           end
         end
       else
         # if nobody or opponent hockeyists own the puck
         unless Utils.units_equal?(env.nearest_my_hockeyist_to_unit(env.world.puck), env.me)
-          # if my teammates are closer to the puck than me
+          # if my teammate is closer to the puck than me
           unless env.panic_mode?
             if env.world.puck.owner_hockeyist_id == -1
               # nobody
-              return true
+              if Utils.units_equal?(env.me, env.nearest_my_hockeyists_to_unit(env.world.puck).last)
+                return true
+              end
             else
               # opponent
               h = env.hockeyist_by_id(env.world.puck.owner_hockeyist_id)

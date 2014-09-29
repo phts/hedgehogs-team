@@ -20,7 +20,7 @@ module State
             end
           end
         else
-          # if my teammates are closer to the puck than me
+          # if my teammate is closer to the puck than me
           unless env.panic_mode?
             unless env.world.puck.owner_hockeyist_id == -1
               # opponent
