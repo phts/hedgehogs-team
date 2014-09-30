@@ -38,7 +38,7 @@ module State
           if Utils.on_my_half?(world.puck)
             return true
           end
-          if Utils.units_equal?(me, env.nearest_my_hockeyists_to_unit(world.puck)[1])
+          if !Utils.units_equal?(me, env.nearest_my_hockeyists_to_unit(world.puck).last)
             return true
           end
         end
@@ -49,7 +49,7 @@ module State
           if env.panic_mode?
             return true
           end
-          if Utils.units_equal?(me, env.nearest_my_hockeyists_to_unit(world.puck)[1])
+          if !Utils.units_equal?(me, env.nearest_my_hockeyists_to_unit(world.puck).last)
             return true
           end
         end
