@@ -17,7 +17,7 @@ module State
       $defending_point_y ||= Constants.my_net_center_y
     end
 
-    def should_perform?(env)
+    def perform_for_two?(env)
       if env.my_hockeyists_own_puck?
         # if my hockeyists own the puck
         unless env.world.puck.owner_hockeyist_id == env.me.id

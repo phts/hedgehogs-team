@@ -12,6 +12,7 @@ class Constants
               :my_net_center_x,
               :my_net_center_y,
               :enough_pass_angle,
+              :team_size,
             ]
 
   BOOLEAN_METHODS = [
@@ -48,6 +49,7 @@ class Constants
     $my_net_center_y = 0.5 * (env.my_player.net_top + env.my_player.net_bottom)
     $enough_pass_angle = 0.5 * game.pass_sector
     $three_by_three = env.world.hockeyists.size >= 8
+    $team_size = env.world.hockeyists.size/2 - 1
   end
 
 end

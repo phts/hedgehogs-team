@@ -10,11 +10,12 @@ class StateMachine
 
   DEFAULT_STATE = :picking_up
 
-  def initialize
+  def init(team_size)
+    return if @state_to_object
     @state_to_object = {}
     classes = State.constants.select{ |c| c != :Base && State.const_get(c).is_a?(Class) }.map { |c| State.const_get(c) }
     classes.each do |cl|
-      @state_to_object[cl.state_name] = cl.new
+      @state_to_object[cl.state_name] = cl.new(team_size)
     end
   end
 

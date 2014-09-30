@@ -19,6 +19,7 @@ class MyStrategy
   def move(me, world, game, move)
     env.update(me, world, move)
     Constants.init(game, env)
+    @state_machine.init(Constants.team_size)
 
     if env.me.state == HockeyistState::SWINGING
       move.action = ActionType::STRIKE

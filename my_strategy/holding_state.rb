@@ -15,7 +15,7 @@ module State
       :holding
     end
 
-    def should_perform?(env)
+    def perform_for_two?(env)
       # if me owns the puck
       env.world.puck.owner_hockeyist_id == env.me.id
     end
