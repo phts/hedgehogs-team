@@ -74,9 +74,11 @@ module State
               end
             else
               # opponent
-              h = env.hockeyist_by_id(world.puck.owner_hockeyist_id)
-              unless env.my_defenders_in_front_of_attacking_opponent(h).count <= 1
-                return true
+              if Utils.units_equal?(me, env.nearest_my_hockeyists_to_unit(world.puck).last)
+                h = env.hockeyist_by_id(world.puck.owner_hockeyist_id)
+                unless env.my_defenders_in_front_of_attacking_opponent(h).count <= 1
+                  return true
+                end
               end
             end
           end
