@@ -8,23 +8,23 @@ module State
       :taking_away
     end
 
-    def perform_for_two?(env)
+    def perform_for_two?
       unless env.my_hockeyists_own_puck?
         # if nobody or opponent hockeyists own the puck
-        if Utils.units_equal?(env.nearest_my_hockeyist_to_unit(env.world.puck), env.me)
+        if Utils.units_equal?(env.nearest_my_hockeyist_to_unit(world.puck), me)
           # if me is closer to the puck than my teammates
-          unless env.world.puck.owner_hockeyist_id == -1
+          unless world.puck.owner_hockeyist_id == -1
             # if opponent hockeyists own the puck
-            if Utils.on_my_half?(env.world.puck)
+            if Utils.on_my_half?(world.puck)
               return true
             end
           end
         else
           # if my teammate is closer to the puck than me
           unless env.panic_mode?
-            unless env.world.puck.owner_hockeyist_id == -1
+            unless world.puck.owner_hockeyist_id == -1
               # opponent
-              h = env.hockeyist_by_id(env.world.puck.owner_hockeyist_id)
+              h = env.hockeyist_by_id(world.puck.owner_hockeyist_id)
               if env.my_defenders_in_front_of_attacking_opponent(h).count <= 1
                 # if only one my hockeyist is in front of attacking opponent
                 return true

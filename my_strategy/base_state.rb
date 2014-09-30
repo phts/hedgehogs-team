@@ -16,31 +16,29 @@ module State
     end
 
     def perform_state(env)
-      @env = env
-      @me = @env.me
-      @world = @env.world
-      @move = @env.move
+      store_env(env)
       perform
     end
 
     def should_perform?(env)
-      send(@should_perform_method, env)
+      store_env(env)
+      send(@should_perform_method)
     end
 
     def reset; end
 
     protected
 
-    def perform_for_two?(env)
+    def perform_for_two?
       raise "Should be overriden"
     end
 
-    def perform_for_three?(env)
-      perform_for_two?(env)
+    def perform_for_three?
+      perform_for_two?
     end
 
-    def perform_for_six?(env)
-      perform_for_three?(env)
+    def perform_for_six?
+      perform_for_three?
     end
 
     def perform; end
@@ -49,6 +47,15 @@ module State
     attr_reader :me
     attr_reader :world
     attr_reader :move
+
+    private
+
+    def store_env(env)
+      @env = env
+      @me = @env.me
+      @world = @env.world
+      @move = @env.move
+    end
 
   end
 end

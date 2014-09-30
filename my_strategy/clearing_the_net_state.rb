@@ -8,13 +8,13 @@ module State
       :clearing_the_net
     end
 
-    def perform_for_two?(env)
+    def perform_for_two?
       if env.my_hockeyists_own_puck?
         # if my hockeyists own the puck
-        unless env.world.puck.owner_hockeyist_id == env.me.id
+        unless world.puck.owner_hockeyist_id == me.id
           # if my teammate owns the puck
           if env.panic_mode?
-            if Utils.on_opponent_half?(env.world.puck)
+            if Utils.on_opponent_half?(world.puck)
               return true
             end
           end

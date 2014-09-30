@@ -8,7 +8,7 @@ module State
       :having_fun
     end
 
-    def perform_for_two?(env)
+    def perform_for_two?
       env.my_player.just_scored_goal || env.my_player.just_missed_goal
     end
 
