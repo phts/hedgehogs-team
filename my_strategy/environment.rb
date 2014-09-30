@@ -5,7 +5,7 @@ require_relative "utils"
 
 class Environment
 
-  FAST_TURN_ENOUGH_ANGLE = 0.5 * Math::PI / 180
+  FAST_TURN_ENOUGH_ANGLE = Math::PI / 180
 
   attr_reader :me
   attr_reader :world
