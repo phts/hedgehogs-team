@@ -17,7 +17,6 @@ class Constants
 
   BOOLEAN_METHODS = [
                       :opponent_on_the_left,
-                      :three_by_three,
                     ]
 
   METHODS.each do |m|
@@ -48,7 +47,6 @@ class Constants
     $my_net_center_x = opponent_on_the_left? ? env.my_player.net_left : env.my_player.net_right
     $my_net_center_y = 0.5 * (env.my_player.net_top + env.my_player.net_bottom)
     $enough_pass_angle = 0.5 * game.pass_sector
-    $three_by_three = env.world.hockeyists.size >= 8
     $team_size = env.world.hockeyists.size/2 - 1
   end
 
