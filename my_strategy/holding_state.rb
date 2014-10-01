@@ -31,7 +31,7 @@ module State
     def perform
       if Utils.on_opponent_half?(me) && env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
         # if too many opponent hockeyists near me on opponent's side
-        teammate = env.nearest_my_hockeyist_to_unit(me, me)
+        teammate = env.nearest_my_hockeyist_to(Constants.my_net_center_x, Constants.my_net_center_y, me)
         a = me.get_angle_to_unit(teammate)
         if a.abs < Math::PI/2
           # if me looks at my teammate

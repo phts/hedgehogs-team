@@ -43,8 +43,8 @@ class Environment
     player_hockeyists(player_id, except).min_by{ |h| h.get_distance_to_unit(unit) }
   end
 
-  def nearest_hockeyist_to(player_id, x, y)
-    player_hockeyists(player_id).min_by{ |h| h.get_distance_to(x, y) }
+  def nearest_hockeyist_to(player_id, x, y, except = nil)
+    player_hockeyists(player_id, except).min_by{ |h| h.get_distance_to(x, y) }
   end
 
   def nearest_my_hockeyist_to_unit(unit, except = nil)
@@ -53,6 +53,10 @@ class Environment
 
   def nearest_opponent_hockeyist_to_unit(unit)
     nearest_hockeyist_to_unit(opponent_player.id, unit)
+  end
+
+  def nearest_my_hockeyist_to(x, y, except = nil)
+    nearest_hockeyist_to(my_player.id, x, y, except)
   end
 
   def nearest_opponent_hockeyist_to(x, y)
