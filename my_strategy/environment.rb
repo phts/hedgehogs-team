@@ -180,8 +180,15 @@ class Environment
     $pass_to = teammate.id
     angle = me.get_angle_to_unit(teammate)
     if angle.abs < Constants.enough_pass_angle
+      dist = me.get_distance_to_unit(teammate)
       move.pass_angle = angle
-      move.pass_power = 1.0
+      move.pass_power = if dist < 150
+                          0.5
+                        elsif dist > 300
+                          1.0
+                        else
+                          dist / 300
+                        end
       move.action = ActionType::PASS
     else
       fast_turn(angle)
