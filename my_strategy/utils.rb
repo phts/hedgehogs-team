@@ -100,5 +100,9 @@ module Utils
       [future_x, future_y]
     end
 
+    def moves_back?(unit)
+      angles_diff(unit.angle, speed_vector_angle(unit)).abs > Math::PI/2
+    end
+
   end
 end

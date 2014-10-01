@@ -181,4 +181,27 @@ describe Utils do
     end
   end
 
+  describe '#moves_back?' do
+    subject { described_class.moves_back?(unit) }
+    let(:unit) { double(:unit) }
+    before :each do
+      allow(unit).to receive(:angle).and_return(unit_angle)
+      allow(described_class).to receive(:speed_vector_angle).with(unit).and_return(speed_angle)
+    end
+    context 'if diff between unit angle and speed angle is more than 90 deg' do
+      let(:unit_angle) { Math::PI/4 }
+      let(:speed_angle) { Math::PI - 0.1 }
+      it 'returns true' do
+        expect(subject).to eq true
+      end
+    end
+    context 'if diff between unit angle and speed angle is less than 90 deg' do
+      let(:unit_angle) { -Math::PI/4 }
+      let(:speed_angle) { -Math::PI/2 }
+      it 'returns false' do
+        expect(subject).to eq false
+      end
+    end
+  end
+
 end
