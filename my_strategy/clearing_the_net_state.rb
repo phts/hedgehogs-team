@@ -8,6 +8,8 @@ module State
       :clearing_the_net
     end
 
+    protected
+
     def perform_for_two?
       if env.my_hockeyists_own_puck?
         # if my hockeyists own the puck

@@ -17,6 +17,8 @@ module State
       $defending_point_y ||= Constants.my_net_center_y
     end
 
+    protected
+
     def perform_for_two?
       if env.my_hockeyists_own_puck?
         # if my hockeyists own the puck

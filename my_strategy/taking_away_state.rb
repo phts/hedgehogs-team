@@ -8,6 +8,8 @@ module State
       :taking_away
     end
 
+    protected
+
     def perform_for_two?
       unless env.my_hockeyists_own_puck?
         # if nobody or opponent hockeyists own the puck

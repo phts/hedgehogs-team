@@ -15,6 +15,13 @@ module State
       :holding
     end
 
+    def reset
+      self.strike_position = nil
+      self.in_strike_position = nil
+    end
+
+    protected
+
     def perform_for_two?
       # if me owns the puck
       world.puck.owner_hockeyist_id == me.id
@@ -41,11 +48,6 @@ module State
         self.strike_position = calc_strike_position
       end
       go_to_strike_position
-    end
-
-    def reset
-      self.strike_position = nil
-      self.in_strike_position = nil
     end
 
     private

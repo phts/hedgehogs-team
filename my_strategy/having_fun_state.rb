@@ -8,6 +8,8 @@ module State
       :having_fun
     end
 
+    protected
+
     def perform_for_two?
       env.my_player.just_scored_goal || env.my_player.just_missed_goal
     end
