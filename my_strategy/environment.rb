@@ -153,7 +153,7 @@ class Environment
       # if moves from unit
       if Utils.unit_speed(me) >= 2
         # if me moves fast then stop and turn
-        move.speed_up = -1.0
+        move.speed_up = Utils.moves_back?(me) ? 1.0 : -1.0
       end
     end
   end
