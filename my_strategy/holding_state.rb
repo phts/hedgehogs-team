@@ -29,15 +29,8 @@ module State
     end
 
     def perform
-      if Utils.on_opponent_half?(me) && env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
-        # if too many opponent hockeyists near me on opponent's side
-        teammate = env.nearest_my_hockeyist_to(Constants.my_net_center_x, Constants.my_net_center_y, me)
-        a = me.get_angle_to_unit(teammate)
-        if a.abs < Math::PI/2
-          # if me looks at my teammate
-          env.pass_to(teammate)
-          return
-        end
+      if try_to_pass_teammate
+        return
       end
       unless strike_position
         self.strike_position = calc_strike_position
@@ -168,6 +161,38 @@ module State
 
     alias_method :bottom_near_point_x, :top_near_point_x
     alias_method :bottom_near_point_y, :top_near_point_y
+
+    def try_to_pass_teammate
+      unless env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
+        # do not pass if there are no many opponent hockeyists near me
+        return false
+      end
+
+      if Utils.on_opponent_half?(me)
+        # on opponent's side
+        teammate = env.nearest_my_hockeyist_to(Constants.my_net_center_x, Constants.my_net_center_y, me)
+        unless Utils.nearer_than?(me.x, teammate)
+          # do not pass if teammate is farther than me (~ closer to opponent's net)
+          return false
+        end
+      else
+        # on my side
+        teammate = env.nearest_my_hockeyist_to(Constants.opponent_net_center_x, Constants.opponent_net_center_y, me)
+        if Utils.nearer_than?(me.x, teammate)
+          # do not pass if teammate is nearer than me (~ closer to my net)
+          return false
+        end
+      end
+
+      angle = me.get_angle_to_unit(teammate)
+      unless angle.abs < Math::PI/2
+        # do not pass if me doesn't look at my teammate
+        return false
+      end
+
+      env.pass_to(teammate)
+      true
+    end
 
   end
 end
