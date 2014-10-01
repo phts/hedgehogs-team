@@ -163,7 +163,7 @@ module State
     alias_method :bottom_near_point_y, :top_near_point_y
 
     def try_to_pass_teammate
-      unless env.opponent_hockeyists_nearer_to_unit_than(me, 120).size > 1
+      unless env.opponent_hockeyists_nearer_to_unit_than(me, 150).size > 1
         # do not pass if there are no many opponent hockeyists near me
         return false
       end
