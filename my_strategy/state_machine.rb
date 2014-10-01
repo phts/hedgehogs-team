@@ -37,7 +37,7 @@ class StateMachine
 
   def perform_state(new_state, env)
     unless new_state == state
-      state_to_object[state].reset if state
+      state_to_object[state].reset(env) if state
       @state = new_state
     end
     state_to_object[new_state].perform_state(env)

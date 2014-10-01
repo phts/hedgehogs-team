@@ -15,7 +15,7 @@ module State
       :holding
     end
 
-    def reset
+    def reset(env)
       self.strike_position = nil
       self.in_strike_position = nil
     end

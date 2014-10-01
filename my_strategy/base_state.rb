@@ -25,7 +25,7 @@ module State
       send(@should_perform_method)
     end
 
-    def reset; end
+    def reset(env); end
 
     protected
 
