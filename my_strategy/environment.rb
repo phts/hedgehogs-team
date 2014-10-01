@@ -176,4 +176,24 @@ class Environment
     my_hockeyists.select{ |h| Utils.nearer_than?(attacking.x, h) }
   end
 
+  def pass_to(teammate)
+    $pass_to = teammate.id
+    angle = me.get_angle_to_unit(teammate)
+    if angle.abs < Constants.enough_pass_angle
+      move.pass_angle = angle
+      move.pass_power = 1.0
+      move.action = ActionType::PASS
+    else
+      fast_turn(angle)
+    end
+  end
+
+  def cancel_pass
+    $pass_to = nil
+  end
+
+  def me_awaiting_for_pass?
+    $pass_to == me.id
+  end
+
 end

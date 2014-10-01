@@ -18,6 +18,7 @@ module State
     def reset(env)
       self.strike_position = nil
       self.in_strike_position = nil
+      env.cancel_pass
     end
 
     protected
@@ -34,13 +35,7 @@ module State
         a = me.get_angle_to_unit(teammate)
         if a.abs < Math::PI/2
           # if me looks at my teammate
-          if a.abs < Constants.enough_pass_angle
-            move.pass_angle = a
-            move.pass_power = 1.0
-            move.action = ActionType::PASS
-          else
-            env.fast_turn(a)
-          end
+          env.pass_to(teammate)
           return
         end
       end
