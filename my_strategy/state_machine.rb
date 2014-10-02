@@ -1,11 +1,11 @@
 require_relative "having_fun_state"
 require_relative "awaiting_for_pass_state"
+require_relative "holding_state"
 require_relative "clearing_the_net_state"
 require_relative "defending_state"
-require_relative "holding_state"
-require_relative "picking_up_state"
 require_relative "supporting_state"
 require_relative "taking_away_state"
+require_relative "picking_up_state"
 
 class StateMachine
 
