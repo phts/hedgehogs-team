@@ -16,6 +16,9 @@ module State
     def perform
       a = me.get_angle_to_unit(world.puck)
       env.smart_turn(a)
+      move.speed_up = -0.5
+      move.action = ActionType::TAKE_PUCK
+      env.try_to_knock_down_opponent
     end
 
   end
