@@ -108,7 +108,7 @@ module State
           end
         end
         move.turn = me.get_angle_to_unit(world.puck)
-        if env.reachable_unit?(world.puck)
+        if env.reachable_unit?(world.puck) && !env.my_hockeyists_own_puck?
           move.action = ActionType::STRIKE
         end
       elsif distance < 200
