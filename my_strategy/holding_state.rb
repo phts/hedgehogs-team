@@ -51,7 +51,8 @@ module State
         pos << [me.x, me.y]
         return pos
       end
-      if me_in_position?(Defending.defending_point_x, Defending.defending_point_y)
+      if me_in_position?(Defending.defending_point_x, Defending.defending_point_y) ||
+         me_in_position?(DefendingCenter.defending_point_x, DefendingCenter.defending_point_y)
         # if took the puck probably while defencing
         # then go to the opposide side where the opponent was from
         if Utils.on_top_half?(env.nearest_opponent_hockeyist_to_unit(me))
