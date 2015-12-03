@@ -1,8 +1,8 @@
 # Хоккейная команда "Ёжики"
 
-Стратегия для управления командой хоккеистов, написанная в рамках чемпионата [Russian AI Cup 2014 CodeHockey](http://russianaicup.ru/).
+Стратегия для управления командой хоккеистов, написанная в рамках чемпионата [Russian AI Cup 2014 CodeHockey](http://2014.russianaicup.ru/).
 
-* [Мой профиль](http://russianaicup.ru/profile/phil.tsarik)
+* [Мой профиль](http://2014.russianaicup.ru/profile/phts)
 * [Правила](https://github.com/Russian-AI-Cup-2014/Tutorial)
 
 ## Расписание
